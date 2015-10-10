@@ -1,7 +1,12 @@
 package costa_kalundborg.server;
 
 import costa_kalundborg.client.GreetingService;
+import costa_kalundborg.shared.Booking;
 import costa_kalundborg.shared.FieldVerifier;
+import costa_kalundborg.shared.Kunde;
+
+import java.util.Date;
+
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**
@@ -41,5 +46,59 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 			return null;
 		}
 		return html.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+	}
+
+	@Override
+	public Booking createBooking(Date d1, Date d2) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Kunde getKunde(String cpr) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Booking getBooking(int id) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void editBooking(int id) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteBooking(int id) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void registerArrival(Kunde c) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public double checkout(Kunde c, int id) throws Exception {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void rentCamel(Kunde c, int number) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addElectricUsage(int id, double amount) throws Exception {
+		// TODO Auto-generated method stub
+		
 	}
 }
