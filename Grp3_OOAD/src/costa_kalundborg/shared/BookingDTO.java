@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 public class BookingDTO implements Serializable{
-	
+
 	private Date start_date;
 	private Date end_date;
 	private Status status;
@@ -17,7 +17,7 @@ public class BookingDTO implements Serializable{
 	private int camel;
 	private KundeDTO kunde;
 	private PladsDTO plads;
-	
+
 	private enum Status{
 		BOOKET,
 		CANCEL,
@@ -27,7 +27,7 @@ public class BookingDTO implements Serializable{
 
 	public BookingDTO(){
 	}
-	
+
 	public BookingDTO(Date start_date, Date end_date, String status, double electric, int dog, int xtraPerson, int camel, int voksne, int born, KundeDTO kunde, PladsDTO plads) throws Exception{
 		this.start_date = start_date;
 		this.end_date = end_date;
@@ -44,8 +44,8 @@ public class BookingDTO implements Serializable{
 		case "AKTIV":
 			this.status = Status.AKTIV;
 			break;
-			default:
-				throw new Exception("Ukendt status på booking.");
+		default:
+			throw new Exception("Ukendt status på booking.");
 		}
 		this.electric = electric;
 		this.dog = dog;
@@ -56,7 +56,7 @@ public class BookingDTO implements Serializable{
 		this.voksne = voksne;
 		this.born = born;
 	}
-	
+
 	/**
 	 * Tjekker om de tilsendte datoer overlapper med datoerne i bookingen. Returnerer true hvis datoerne overlapper.
 	 * @param start_date
@@ -67,38 +67,57 @@ public class BookingDTO implements Serializable{
 	public boolean compareDate(Date start_date, Date end_date) throws Exception {
 		if (start_date.compareTo(end_date) < 0)
 			throw new Exception("Slut dato er før start dato.");
-		
+
 		if (this.start_date.compareTo(end_date)>=0)
 			return false;
 		else if (this.end_date.compareTo(start_date)>=0 )
 			return false;
 		return true;
 	}
-	
+
+	/**
+	 * Returnerer prisen for den pågældende booking.
+	 * @return
+	 */
 	public double getPrice(){
 		double price = 0;
 		long days = getDifferenceDays(start_date, end_date);
-			
-		if (true){
-		price += days * plads.getPrice();
-		price += dog * 10 * days;
-		price += xtraPerson * 100 * days;
-		price += camelPrice();
-		price += electric * 3.75;
-		price += voksne * 82 * days;
-		price += born * 42 * days;
-		
-		
+
+		if (!highSeason()){
+			price += days * plads.getLowprice();
+			price += dog * 10 * days;
+			price += xtraPerson * 100 * days;
+			price += camelPrice();
+			price += electric * 3.75;
+			price += voksne * 82 * days;
+			price += born * 42 * days;
+		} else {
+			price += days * plads.getPrice();
+			price += dog * 10 * days;
+			price += xtraPerson * 100 * days;
+			price += camelPrice();
+			price += electric * 3.75;
+			price += voksne * 87 * days;
+			price += born * 49 * days;
 		}
-		
+
 		return price;
 	}
-	
-	public long getDifferenceDays(Date d1, Date d2) {
-	    long diff = d2.getTime() - d1.getTime();
-	    return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+
+	/**
+	 * Returnerer true hvis bookingen er i højsæson
+	 * @return
+	 */
+	public boolean highSeason(){
+		// to be implemented med start_date og end_date
+		return false;
 	}
-	
+
+	public long getDifferenceDays(Date d1, Date d2) {
+		long diff = d2.getTime() - d1.getTime();
+		return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+	}
+
 	public double camelPrice(){
 		// TO DO
 		return 0;

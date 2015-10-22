@@ -1,0 +1,42 @@
+/* must be dropped in this order to avoid constraint violations */
+DROP TABLE IF EXISTS booking;
+DROP TABLE IF EXISTS campingpas;
+DROP TABLE IF EXISTS plads;
+DROP TABLE IF EXISTS kunde;
+
+CREATE TABLE kunde(kunde_id INT NOT NULL AUTO_INCREMENT, kunde_navn TEXT, cpr TEXT, adresse TEXT, pCode TEXT, city TEXT, PRIMARY KEY(kunde_id)) ENGINE=innoDB;
+
+CREATE TABLE plads(plads_id INT PRIMARY KEY, type TEXT, price REAL, lowprice REAL) ENGINE=innoDB;
+
+CREATE TABLE campingpas(cp_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, kunde_id INT, cpas TEXT, FOREIGN KEY (kunde_id) REFERENCES kunde(kunde_id)) ENGINE=innoDB;
+
+CREATE TABLE booking(booking_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, start_date TEXT, end_date TEXT, status TEXT, electric REAL, dog INT, xtraPerson INT, camel INT, kunde_id INT, plads_id INT, voksne INT, born INT, FOREIGN KEY (kunde_id) REFERENCES kunde(kunde_id), FOREIGN KEY (plads_id) REFERENCES plads(plads_id)) ENGINE=innoDB;
+
+INSERT INTO kunde(kunde_navn, cpr, adresse, pCode, city) VALUES
+('Ebbe', '070770-7007', 'Højbro Plads 1', '1780', 'København'),
+('Jakob', '070770-7007', 'Højbro Plads 2', '1780', 'København'),
+('Christian', '070770-7007', 'Højbro Plads 3', '1780', 'København'),
+('Jon', '070770-7007', 'Højbro Plads 4', '1780', 'København');
+
+INSERT INTO plads(plads_id, type, price, lowprice) VALUES
+(1, 'Lille camping', 400.00, 350.00),
+(2, 'Lille camping', 400.00, 350.00),
+(3, 'Lille camping', 400.00, 350.00),
+(13, 'Stor camping', 740.00, 350.00),
+(34, 'Stor camping', 740.00, 350.00),
+(87, 'Stor hytte', 980.00, 350.00),
+(88, 'Stor hytte', 980.00, 350.00),
+(89, 'Lille hytte', 680.00, 350.00),
+(90, 'Lille hytte', 680.00, 350.00);
+
+INSERT INTO campingpas(kunde_id, cpas) VALUES
+(1, 'NUL128LC'),
+(2, 'NUL129LC'),
+(3, 'NUL130LC'),
+(4, 'NUL131LC');
+
+INSERT INTO booking(start_date, end_date, status, electric, dog, xtraPerson, camel, kunde_id, plads_id, voksne, born) VALUES
+('30-09-2015', '04-10-2015', 'AFHOLDT', 3.56, 0, 0, 3, 1, 13, 2, 0),
+('05-11-2015', '04-12-2015', 'BOOKET', 0, 2, 0, 0, 4, 13, 2, 0),
+('30-09-2015', '04-10-2015', 'CANCEL', 0, 0, 0, 3, 1, 13, 2, 0),
+('22-10-2015', '04-11-2015', 'AKTIV', 0, 0, 0, 3, 1, 13, 2, 0);
