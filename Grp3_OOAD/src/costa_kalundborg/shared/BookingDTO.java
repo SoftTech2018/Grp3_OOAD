@@ -2,6 +2,7 @@ package costa_kalundborg.shared;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class BookingDTO implements Serializable{
 	
@@ -10,6 +11,8 @@ public class BookingDTO implements Serializable{
 	private Status status;
 	private double electric;
 	private int dog;
+	private int voksne;
+	private int born;
 	private int xtraPerson;
 	private int camel;
 	private KundeDTO kunde;
@@ -25,7 +28,7 @@ public class BookingDTO implements Serializable{
 	public BookingDTO(){
 	}
 	
-	public BookingDTO(Date start_date, Date end_date, String status, double electric, int dog, int xtraPerson, int camel, KundeDTO kunde, PladsDTO plads) throws Exception{
+	public BookingDTO(Date start_date, Date end_date, String status, double electric, int dog, int xtraPerson, int camel, int voksne, int born, KundeDTO kunde, PladsDTO plads) throws Exception{
 		this.start_date = start_date;
 		this.end_date = end_date;
 		switch(status){
@@ -49,7 +52,9 @@ public class BookingDTO implements Serializable{
 		this.xtraPerson = xtraPerson;
 		this.camel = camel;
 		this.kunde = kunde;
-		this.plads = plads;		
+		this.plads = plads;	
+		this.voksne = voksne;
+		this.born = born;
 	}
 	
 	/**
@@ -71,6 +76,31 @@ public class BookingDTO implements Serializable{
 	}
 	
 	public double getPrice(){
+		double price = 0;
+		long days = getDifferenceDays(start_date, end_date);
+			
+		if (true){
+		price += days * plads.getPrice();
+		price += dog * 10 * days;
+		price += xtraPerson * 100 * days;
+		price += camelPrice();
+		price += electric * 3.75;
+		price += voksne * 82 * days;
+		price += born * 42 * days;
+		
+		
+		}
+		
+		return price;
+	}
+	
+	public long getDifferenceDays(Date d1, Date d2) {
+	    long diff = d2.getTime() - d1.getTime();
+	    return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+	}
+	
+	public double camelPrice(){
+		// TO DO
 		return 0;
 	}
 
