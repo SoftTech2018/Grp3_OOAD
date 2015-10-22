@@ -1,5 +1,6 @@
 package costa_kalundborg.server;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -7,6 +8,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import costa_kalundborg.client.Service;
 import costa_kalundborg.shared.BookingDTO;
 import costa_kalundborg.shared.KundeDTO;
+import costa_kalundborg.shared.PladsDTO;
 
 /**
  * The server-side implementation of the RPC service.
@@ -55,7 +57,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	}
 
 	@Override
-	public BookingDTO checkBooking(BookingDTO booking) throws Exception {
+	public ArrayList<PladsDTO> checkBooking(BookingDTO booking) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
