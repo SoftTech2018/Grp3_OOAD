@@ -37,7 +37,7 @@ public class Menu extends Composite{
 			@Override
 			public void onClick(ClickEvent event) {
 				vPaneCon.clear();
-				vPaneCon.add(new BookPlads());
+				vPaneCon.add(new BookPlads(service));
 			}
 			
 		});
