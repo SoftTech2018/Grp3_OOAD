@@ -4,16 +4,16 @@ import java.util.Date;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-import costa_kalundborg.shared.Booking;
+import costa_kalundborg.shared.BookingDTO;
 import costa_kalundborg.shared.Kunde;
 
 /**
  * The async counterpart of <code>GreetingService</code>.
  */
 public interface ServiceAsync {
-	void createBooking(Date d1, Date d2, AsyncCallback<Booking> callback) throws Exception;
+	void createBooking(Date d1, Date d2, AsyncCallback<BookingDTO> callback) throws Exception;
 	void getKunde(String cpr, AsyncCallback<Kunde> callback) throws Exception;
-	void getBooking(int id, AsyncCallback<Booking> callback) throws Exception;
+	void getBooking(int id, AsyncCallback<BookingDTO> callback) throws Exception;
 	void editBooking(int id, AsyncCallback<Void> callback) throws Exception;
 	void deleteBooking(int id, AsyncCallback<Void> callback) throws Exception;
 	void registerArrival(Kunde c, AsyncCallback<Void> callback) throws Exception;

@@ -5,7 +5,7 @@ import java.util.Date;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import costa_kalundborg.client.Service;
-import costa_kalundborg.shared.Booking;
+import costa_kalundborg.shared.BookingDTO;
 import costa_kalundborg.shared.Kunde;
 
 /**
@@ -55,7 +55,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	}
 
 	@Override
-	public Booking createBooking(Date d1, Date d2) throws Exception {
+	public BookingDTO createBooking(Date d1, Date d2) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -67,7 +67,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	}
 
 	@Override
-	public Booking getBooking(int id) throws Exception {
+	public BookingDTO getBooking(int id) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}

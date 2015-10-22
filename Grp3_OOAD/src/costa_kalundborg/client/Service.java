@@ -5,7 +5,7 @@ import java.util.Date;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
-import costa_kalundborg.shared.Booking;
+import costa_kalundborg.shared.BookingDTO;
 import costa_kalundborg.shared.Kunde;
 
 /**
@@ -13,9 +13,9 @@ import costa_kalundborg.shared.Kunde;
  */
 @RemoteServiceRelativePath("greet")
 public interface Service extends RemoteService {
-	Booking createBooking(Date d1, Date d2) throws Exception;
+	BookingDTO createBooking(Date d1, Date d2) throws Exception;
 	Kunde getKunde(String cpr) throws Exception;
-	Booking getBooking(int id) throws Exception;
+	BookingDTO getBooking(int id) throws Exception;
 	void editBooking(int id) throws Exception;
 	void deleteBooking(int id) throws Exception;
 	void registerArrival(Kunde c) throws Exception;

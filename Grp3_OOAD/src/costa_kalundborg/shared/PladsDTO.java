@@ -4,12 +4,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Plads implements Serializable{
+public class PladsDTO implements Serializable{
 
 	private int plads_id;
 	private Type type;
 	private double price;
-	private ArrayList<Booking> bookings;
+	private ArrayList<BookingDTO> bookings;
 
 	private enum Type {
 		LILLE_TELT,
@@ -17,7 +17,7 @@ public class Plads implements Serializable{
 		HYTTE,
 		LUKSUS_HYTTE };
 
-		public Plads(int id, String type, double price) throws Exception{
+		public PladsDTO(int id, String type, double price) throws Exception{
 			this.plads_id = id;
 			this.price = price;
 			switch(type){
@@ -38,7 +38,7 @@ public class Plads implements Serializable{
 			}
 		}
 
-		public Plads(int id, String type, double price, ArrayList<Booking> bookings) throws Exception{
+		public PladsDTO(int id, String type, double price, ArrayList<BookingDTO> bookings) throws Exception{
 			this.plads_id = id;
 			this.price = price;
 			this.bookings = bookings;
@@ -62,13 +62,14 @@ public class Plads implements Serializable{
 		}
 
 		/**
-		 * Tjekker om pladsen er ledig i en given tidsperiode
+		 * Tjekker om pladsen er ledig i en given tidsperiode. Returnerer true hvis pladsen er ledig.
 		 * @param start_date
 		 * @param end_date
 		 * @return
+		 * @throws Exception 
 		 */
-		public boolean checkAvailability(Date start_date, Date end_date){
-			for (Booking booking : bookings){
+		public boolean checkAvailability(Date start_date, Date end_date) throws Exception{
+			for (BookingDTO booking : bookings){
 				if (booking.compareDate(start_date, end_date))
 					return false;
 			}
@@ -79,8 +80,40 @@ public class Plads implements Serializable{
 		 * Tilknytter en booking til pladsen
 		 * @param b
 		 */
-		public void book(Booking b){
+		public void book(BookingDTO b){
 			this.bookings.add(b);
+		}
+
+		public int getPlads_id() {
+			return plads_id;
+		}
+
+		public void setPlads_id(int plads_id) {
+			this.plads_id = plads_id;
+		}
+
+		public Type getType() {
+			return type;
+		}
+
+		public void setType(Type type) {
+			this.type = type;
+		}
+
+		public double getPrice() {
+			return price;
+		}
+
+		public void setPrice(double price) {
+			this.price = price;
+		}
+
+		public ArrayList<BookingDTO> getBookings() {
+			return bookings;
+		}
+
+		public void setBookings(ArrayList<BookingDTO> bookings) {
+			this.bookings = bookings;
 		}
 
 }
