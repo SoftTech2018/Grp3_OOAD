@@ -13,7 +13,6 @@ import costa_kalundborg.shared.Kunde;
  */
 @RemoteServiceRelativePath("greet")
 public interface Service extends RemoteService {
-	String greetServer(String name) throws IllegalArgumentException;
 	Booking createBooking(Date d1, Date d2) throws Exception;
 	Kunde getKunde(String cpr) throws Exception;
 	Booking getBooking(int id) throws Exception;

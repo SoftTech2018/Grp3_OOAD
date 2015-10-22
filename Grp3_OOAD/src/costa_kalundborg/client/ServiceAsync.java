@@ -11,7 +11,6 @@ import costa_kalundborg.shared.Kunde;
  * The async counterpart of <code>GreetingService</code>.
  */
 public interface ServiceAsync {
-	void greetServer(String input, AsyncCallback<String> callback) throws IllegalArgumentException;
 	void createBooking(Date d1, Date d2, AsyncCallback<Booking> callback) throws Exception;
 	void getKunde(String cpr, AsyncCallback<Kunde> callback) throws Exception;
 	void getBooking(int id, AsyncCallback<Booking> callback) throws Exception;
