@@ -32,6 +32,15 @@ public class Menu extends Composite{
 		ftCon = new FlexTable();
 		
 		Button plads = new Button("Book plads");
+		plads.addClickHandler(new ClickHandler(){
+
+			@Override
+			public void onClick(ClickEvent event) {
+				vPaneCon.clear();
+				vPaneCon.add(new BookPlads());
+			}
+			
+		});
 		Button kamel = new Button("Book kamel");
 		Button hund = new Button("Book hund");
 		Button telt = new Button("Book telt");
