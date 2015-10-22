@@ -176,4 +176,20 @@ public class BookingDTO implements Serializable{
 		this.plads = plads;
 	}
 
+	public int getVoksne() {
+		return voksne;
+	}
+
+	public void setVoksne(int voksne) {
+		this.voksne = voksne;
+	}
+
+	public int getBorn() {
+		return born;
+	}
+
+	public void setBorn(int born) {
+		this.born = born;
+	}
+
 }

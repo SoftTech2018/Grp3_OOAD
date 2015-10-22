@@ -8,7 +8,7 @@ public class PladsDTO implements Serializable{
 
 	private int plads_id;
 	private Type type;
-	private double price;
+	private double price, lowprice;
 	private ArrayList<BookingDTO> bookings;
 
 	private enum Type {
@@ -17,9 +17,10 @@ public class PladsDTO implements Serializable{
 		HYTTE,
 		LUKSUS_HYTTE };
 
-		public PladsDTO(int id, String type, double price) throws Exception{
+		public PladsDTO(int id, String type, double price, double lowprice) throws Exception{
 			this.plads_id = id;
 			this.price = price;
+			this.lowprice = lowprice;
 			switch(type){
 			case "LILLE_TELT":
 				this.type = Type.LILLE_TELT;
@@ -38,11 +39,11 @@ public class PladsDTO implements Serializable{
 			}
 		}
 
-		public PladsDTO(int id, String type, double price, ArrayList<BookingDTO> bookings) throws Exception{
+		public PladsDTO(int id, String type, double price, double lowprice, ArrayList<BookingDTO> bookings) throws Exception{
 			this.plads_id = id;
 			this.price = price;
 			this.bookings = bookings;
-
+			this.lowprice = lowprice;
 			switch(type){
 			case "LILLE_TELT":
 				this.type = Type.LILLE_TELT;
@@ -114,6 +115,14 @@ public class PladsDTO implements Serializable{
 
 		public void setBookings(ArrayList<BookingDTO> bookings) {
 			this.bookings = bookings;
+		}
+
+		public double getLowprice() {
+			return lowprice;
+		}
+
+		public void setLowprice(double lowprice) {
+			this.lowprice = lowprice;
 		}
 
 }
