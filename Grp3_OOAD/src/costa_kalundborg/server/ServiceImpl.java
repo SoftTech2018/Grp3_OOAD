@@ -6,7 +6,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import costa_kalundborg.client.Service;
 import costa_kalundborg.shared.BookingDTO;
-import costa_kalundborg.shared.Kunde;
+import costa_kalundborg.shared.KundeDTO;
 
 /**
  * The server-side implementation of the RPC service.
@@ -61,7 +61,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	}
 
 	@Override
-	public Kunde getKunde(String cpr) throws Exception {
+	public KundeDTO getKunde(String cpr) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -85,19 +85,19 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	}
 
 	@Override
-	public void registerArrival(Kunde c) throws Exception {
+	public void registerArrival(KundeDTO c) throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public double checkout(Kunde c, int id) throws Exception {
+	public double checkout(KundeDTO c, int id) throws Exception {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public void rentCamel(Kunde c, int number) throws Exception {
+	public void rentCamel(KundeDTO c, int number) throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
