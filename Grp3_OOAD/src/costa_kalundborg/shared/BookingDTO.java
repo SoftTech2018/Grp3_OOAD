@@ -7,8 +7,51 @@ public class BookingDTO implements Serializable{
 	
 	private Date start_date;
 	private Date end_date;
+	private Status status;
+	private double electric;
+	private int dog;
+	private int xtraPerson;
+	private int camel;
+	private KundeDTO kunde;
+	private PladsDTO plads;
+	
+	private enum Status{
+		BOOKET,
+		CANCEL,
+		AFHOLDT,
+		AKTIV
+	}
 
-
+	public BookingDTO(){
+	}
+	
+	public BookingDTO(Date start_date, Date end_date, String status, double electric, int dog, int xtraPerson, int camel, KundeDTO kunde, PladsDTO plads) throws Exception{
+		this.start_date = start_date;
+		this.end_date = end_date;
+		switch(status){
+		case "BOOKET":
+			this.status = Status.BOOKET;
+			break;
+		case "CANCEL":
+			this.status = Status.CANCEL;
+			break;
+		case "AFHOLDT":
+			this.status = Status.AFHOLDT;
+			break;
+		case "AKTIV":
+			this.status = Status.AKTIV;
+			break;
+			default:
+				throw new Exception("Ukendt status på booking.");
+		}
+		this.electric = electric;
+		this.dog = dog;
+		this.xtraPerson = xtraPerson;
+		this.camel = camel;
+		this.kunde = kunde;
+		this.plads = plads;		
+	}
+	
 	/**
 	 * Tjekker om de tilsendte datoer overlapper med datoerne i bookingen. Returnerer true hvis datoerne overlapper.
 	 * @param start_date
@@ -25,6 +68,82 @@ public class BookingDTO implements Serializable{
 		else if (this.end_date.compareTo(start_date)>=0 )
 			return false;
 		return true;
+	}
+	
+	public double getPrice(){
+		return 0;
+	}
+
+	public Date getStart_date() {
+		return start_date;
+	}
+
+	public void setStart_date(Date start_date) {
+		this.start_date = start_date;
+	}
+
+	public Date getEnd_date() {
+		return end_date;
+	}
+
+	public void setEnd_date(Date end_date) {
+		this.end_date = end_date;
+	}
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
+	public double getElectric() {
+		return electric;
+	}
+
+	public void setElectric(double elictric) {
+		this.electric = elictric;
+	}
+
+	public int getDog() {
+		return dog;
+	}
+
+	public void setDog(int dog) {
+		this.dog = dog;
+	}
+
+	public int getXtraPerson() {
+		return xtraPerson;
+	}
+
+	public void setXtraPerson(int xtraPerson) {
+		this.xtraPerson = xtraPerson;
+	}
+
+	public int getCamel() {
+		return camel;
+	}
+
+	public void setCamel(int camel) {
+		this.camel = camel;
+	}
+
+	public KundeDTO getKunde() {
+		return kunde;
+	}
+
+	public void setKunde(KundeDTO kunde) {
+		this.kunde = kunde;
+	}
+
+	public PladsDTO getPlads() {
+		return plads;
+	}
+
+	public void setPlads(PladsDTO plads) {
+		this.plads = plads;
 	}
 
 }
