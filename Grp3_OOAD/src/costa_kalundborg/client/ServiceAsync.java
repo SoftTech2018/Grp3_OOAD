@@ -11,6 +11,7 @@ import costa_kalundborg.shared.KundeDTO;
  * The async counterpart of <code>GreetingService</code>.
  */
 public interface ServiceAsync {
+	void checkBooking(BookingDTO booking, AsyncCallback<BookingDTO> callback) throws Exception;
 	void createBooking(BookingDTO booking, AsyncCallback<BookingDTO> callback) throws Exception;
 	void getKunde(String cpr, AsyncCallback<KundeDTO> callback) throws Exception;
 	void getBooking(int id, AsyncCallback<BookingDTO> callback) throws Exception;

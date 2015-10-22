@@ -55,6 +55,12 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	}
 
 	@Override
+	public BookingDTO checkBooking(BookingDTO booking) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
 	public BookingDTO createBooking(BookingDTO booking) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
