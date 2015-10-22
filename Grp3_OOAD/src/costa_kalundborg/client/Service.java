@@ -12,7 +12,7 @@ import costa_kalundborg.shared.Kunde;
  * The client-side stub for the RPC service.
  */
 @RemoteServiceRelativePath("greet")
-public interface GreetingService extends RemoteService {
+public interface Service extends RemoteService {
 	String greetServer(String name) throws IllegalArgumentException;
 	Booking createBooking(Date d1, Date d2) throws Exception;
 	Kunde getKunde(String cpr) throws Exception;
