@@ -8,7 +8,7 @@
   <!-- Servlets -->
   <servlet>
     <servlet-name>greetServlet</servlet-name>
-    <servlet-class>costa_kalundborg.server.GreetingServiceImpl</servlet-class>
+    <servlet-class>costa_kalundborg.server.ServiceImpl</servlet-class>
   </servlet>
   
   <servlet-mapping>
