@@ -13,7 +13,7 @@ import costa_kalundborg.shared.KundeDTO;
  */
 @RemoteServiceRelativePath("greet")
 public interface Service extends RemoteService {
-	BookingDTO createBooking(Date d1, Date d2) throws Exception;
+	BookingDTO createBooking(BookingDTO booking) throws Exception;
 	KundeDTO getKunde(String cpr) throws Exception;
 	BookingDTO getBooking(int id) throws Exception;
 	void editBooking(int id) throws Exception;
