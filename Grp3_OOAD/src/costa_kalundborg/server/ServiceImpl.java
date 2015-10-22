@@ -1,19 +1,25 @@
 package costa_kalundborg.server;
 
-import costa_kalundborg.client.Service;
-import costa_kalundborg.shared.Booking;
-import costa_kalundborg.shared.FieldVerifier;
-import costa_kalundborg.shared.Kunde;
-
 import java.util.Date;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+
+import costa_kalundborg.client.Service;
+import costa_kalundborg.shared.Booking;
+import costa_kalundborg.shared.Kunde;
 
 /**
  * The server-side implementation of the RPC service.
  */
 @SuppressWarnings("serial")
 public class ServiceImpl extends RemoteServiceServlet implements Service {
+	
+	private DAO dao;
+	
+	public ServiceImpl(){
+		dao = new DAO();
+	}
+	
 //
 //	public String greetServer(String input) throws IllegalArgumentException {
 //		// Verify that the input is valid. 
