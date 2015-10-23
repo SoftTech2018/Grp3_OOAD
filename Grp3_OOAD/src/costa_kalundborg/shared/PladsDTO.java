@@ -93,12 +93,27 @@ public class PladsDTO implements Serializable{
 			this.plads_id = plads_id;
 		}
 
-		public Type getType() {
-			return type;
+		public String getType() {
+			return type.toString();
 		}
 
-		public void setType(Type type) {
-			this.type = type;
+		public void setType(String type) throws Exception {
+			switch(type){
+			case "LILLE_TELT":
+				this.type = Type.LILLE_TELT;
+				break;
+			case "STOR_TELT":
+				this.type = Type.STOR_TELT;
+				break;
+			case "HYTTE":
+				this.type = Type.HYTTE;
+				break;
+			case "LUKSUS_HYTTE":
+				this.type = Type.LUKSUS_HYTTE;
+				break;
+			default:
+				throw new Exception("Ukendt pladstype!");
+			}
 		}
 
 		public double getPrice() {
