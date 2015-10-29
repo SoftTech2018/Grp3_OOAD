@@ -23,7 +23,7 @@ public class DAO {
 		
 	}
 	
-	public static KundeDTO getCustomer(String cpr) {
+	public KundeDTO getCustomer(String cpr) {
 		ResultSet rs = Connector.doQuery(/*SQL statement med cpr'en den får medsendt*/);
 		try { 
 			if (!rs.first()) throw new DALException("Kunde " + cpr + " findes ikke");
@@ -33,7 +33,7 @@ public class DAO {
 		catch (SQLException e) {throw new DALException(e); }
 	}
 	
-	public static void createCustomer(KundeDTO c) {
+	public void createCustomer(KundeDTO c) {
 		Connector.doUpdate(/*SQL statement med Kunde-objektet den får medsendt*/);
 //		c.getKundeNavn()
 //		c.getCpr()
@@ -43,7 +43,7 @@ public class DAO {
 		
 	}
 	
-	public static BookingDTO getBooking(int id) {
+	public BookingDTO getBooking(int id) {
 		ResultSet rs = Connector.doQuery(/*SQL statement med id'en den får medsendt*/);
 		BookingDTO b;
 		try { 
@@ -56,7 +56,7 @@ public class DAO {
 		return b; /*Resultat fra database Booking*/
 	}
 	
-		public static String getDate(String date) {
+		public String getDate(String date) {
 //			String day = date.substring(0, 2);
 //			String month = date.substring(3, 4);
 //			String year = date.substring(6, 9);
@@ -71,15 +71,15 @@ public class DAO {
 			
 		}
 		
-		public static String getStatus(String status) {
+		public String getStatus(String status) {
 			return status;
 		}
 	
-	public static void createBooking(BookingDTO b) {
+	public void createBooking(BookingDTO b) {
 		Connector.doUpdate(/*SQL statement med Booking-objektet den får medsendt*/);
 	}
 	
-	public static PladsDTO getPlads(int plads) {
+	public PladsDTO getPlads(int plads) {
 		ResultSet rs = Connector.doQuery(/*SQL statement med id'en den får medsendt*/);
 		PladsDTO p;
 		try { 
@@ -92,7 +92,7 @@ public class DAO {
 		return p; /*Resultat fra database Booking*/
 	}
 	
-	public static ArrayList<BookingDTO> getBookings(int plads) {
+	public ArrayList<BookingDTO> getBookings(int plads) {
 		ArrayList<BookingDTO> list = new ArrayList<BookingDTO>();
 		ResultSet rs = Connector.doQuery(/*Sql statement med id'en den får medsendt*/);
 		try
@@ -106,7 +106,7 @@ public class DAO {
 		return list; 
 	}
 	
-	public static ArrayList<PladsDTO> getPladser() {
+	public ArrayList<PladsDTO> getPladser() {
 		ArrayList<PladsDTO> list = new ArrayList<PladsDTO>();
 		ResultSet rs = Connector.doQuery(/* SQL statement for alle pladser*/);
 		try
