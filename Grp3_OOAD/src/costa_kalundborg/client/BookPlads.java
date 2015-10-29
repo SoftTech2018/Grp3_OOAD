@@ -1,10 +1,7 @@
 package costa_kalundborg.client;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.text.ParseException;
 import java.util.List;
-
-import cdio.shared.RaavareDTO;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -20,6 +17,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import costa_kalundborg.shared.BookingDTO;
 import costa_kalundborg.shared.KundeDTO;
 import costa_kalundborg.shared.PladsDTO;
+import costa_kalundborg.shared.Status;
 
 public class BookPlads extends Composite {
 	
@@ -29,15 +27,12 @@ public class BookPlads extends Composite {
 	private TextBox name, address, zip, date1, date2, adult, child;
 	private Button ok;
 	private ListBox type;
-	private String adults, children;
+	private int adults, children;
 	private String expectedPattern = "dd/MM/yyyy";
-	private Date startDate, endDate;
-	
-	private SimpleDateFormat formatter;
+	private String startDate, endDate;
 	
 	public BookPlads(final ServiceAsync service){
 		this.service = service;
-		formatter = new SimpleDateFormat(expectedPattern);
 		vPane = new VerticalPanel();
 		initWidget(vPane);
 		run();
@@ -54,61 +49,69 @@ public class BookPlads extends Composite {
 		ft.setText(0, 0, "Start dato");
 		date1 = new TextBox();
 		ft.setWidget(0, 1, date1);
-		startDate = formatter.parse(date1.getText());
+		
+		startDate = date1.getText();
 		
 		ft.setText(1, 0, "Slut dato");
 		date2 = new TextBox();
 		ft.setWidget(1, 1, date2);
-		endDate = formatter.parse(date2.getText());
+		
+		endDate = date2.getText();
 		
 		ft.setText(2, 0, "Antal voksne");
 		adult = new TextBox();
 		ft.setWidget(2, 1, adult);
-		adults = adult.getText();
+		adults = Integer.parseInt(adult.getText());
 		
 		ft.setText(3, 0, "Antal børn");
 		child = new TextBox();
 		ft.setWidget(3, 1, child);
-		children = child.getText();
+		children = Integer.parseInt(child.getText());
 		
 		ok = new Button("Søg");
 		ok.addClickHandler(new ClickHandler(){
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				service.checkBooking(new BookingDTO(startDate, endDate, null, null, null, null, null, adults, children, KundeDTO kunde, PladsDTO plads), new AsyncCallback<List<PladsDTO>>(){
+				try {
+					Status ledig = Status.CANCEL;
+					service.checkBooking(new BookingDTO(startDate, endDate, ledig, 0.0, 0, 0, 0, adults, children, null, null), new AsyncCallback<List<PladsDTO>>(){
 
-					@Override
-					public void onFailure(Throwable caught) {
-						// TODO Auto-generated method stub
-						
-					}
+						@Override
+						public void onFailure(Throwable caught) {
+							Window.alert("Ingen ledige pladser");
+							run();
+						}
 
-					@Override
-					public void onSuccess(List<PladsDTO> result) {
-						// TODO Auto-generated method stub
+						@Override
+						public void onSuccess(List<PladsDTO> result) {
+							// TODO Auto-generated method stub
+							
+						}
 						
-					}
-					
-				});
+					});
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			
 		});
 		ft.setWidget(4, 0, ok);
-		
-		ft.setText(4, 0, "Beboelse");
-		type = new ListBox();
-		type.addItem("Telt");
-		type.addItem("Campingvogn");
-		type.addItem("2 pers. hytte - 12m2");
-		type.addItem("2 pers. hytte - 14m2");
-		type.addItem("4 pers. hytte - 22m2");
-		type.addItem("4-6 pers. luksushytte - 25m2");
-		type.addItem("4-6 pers. luksushytte+ - 25m2");
+//		
+//		ft.setText(4, 0, "Beboelse");
+//		type = new ListBox();
+//		type.addItem("Telt");
+//		type.addItem("Campingvogn");
+//		type.addItem("2 pers. hytte - 12m2");
+//		type.addItem("2 pers. hytte - 14m2");
+//		type.addItem("4 pers. hytte - 22m2");
+//		type.addItem("4-6 pers. luksushytte - 25m2");
+//		type.addItem("4-6 pers. luksushytte+ - 25m2");
 		
 //		getResidenceType(type.getSelectedIndex());
 		
-		ft.setWidget(4, 1, type);
+//		ft.setWidget(4, 1, type);
 		
 		
 //		ft.setText(0, 0, "Navn");

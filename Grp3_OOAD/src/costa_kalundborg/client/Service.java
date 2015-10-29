@@ -2,6 +2,7 @@ package costa_kalundborg.client;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -15,7 +16,7 @@ import costa_kalundborg.shared.PladsDTO;
  */
 @RemoteServiceRelativePath("greet")
 public interface Service extends RemoteService {
-	ArrayList<PladsDTO> checkBooking(BookingDTO booking) throws Exception;
+	List<PladsDTO> checkBooking(BookingDTO booking) throws Exception;
 	BookingDTO createBooking(BookingDTO booking) throws Exception;
 	KundeDTO getKunde(String cpr) throws Exception;
 	BookingDTO getBooking(int id) throws Exception;
