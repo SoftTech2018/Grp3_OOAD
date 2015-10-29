@@ -106,4 +106,19 @@ public class DAO {
 		return list; 
 	}
 	
+	public static ArrayList<PladsDTO> getPladser() {
+		ArrayList<PladsDTO> list = new ArrayList<PladsDTO>();
+		ResultSet rs = Connector.doQuery(/* SQL statement for alle pladser*/);
+		try
+		{
+			while (rs.next())
+			{
+				int plads = rs.getInt("plads_id");
+				list.add(new PladsDTO (plads, rs.getString("type"), rs.getDouble("price"), rs.getDouble("lowprice"), getBookings(plads)));
+			}
+		}
+		catch (SQLException e) {throw new DALException(e); }
+		return list;
+	}
+	
 }
