@@ -7,8 +7,8 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class BookingDTO implements Serializable{
 
-	private String start_Calendar;
-	private String end_Calendar;
+	private String startDate;
+	private String endDate;
 	private Status status;
 	private double electric;
 	private int dog;
@@ -19,19 +19,12 @@ public class BookingDTO implements Serializable{
 	private KundeDTO kunde;
 	private PladsDTO plads;
 
-//	private enum Status implements Serializable, IsSerializable{
-//		BOOKET,
-//		CANCEL,
-//		AFHOLDT,
-//		AKTIV
-//	}
-
 	public BookingDTO(){
 	}
 
-	public BookingDTO(String start_Calendar, String end_Calendar, Status status, double electric, int dog, int xtraPerson, int camel, int voksne, int born, KundeDTO kunde, PladsDTO plads) throws Exception{
-		this.start_Calendar = start_Calendar;
-		this.end_Calendar = end_Calendar;
+	public BookingDTO(String startDate, String endDate, Status status, double electric, int dog, int xtraPerson, int camel, int voksne, int born, KundeDTO kunde, PladsDTO plads) throws Exception{
+		this.startDate = startDate;
+		this.endDate = endDate;
 		switch(status.getStatus()){
 		case BOOKET:
 			this.status = Status.BOOKET;
@@ -124,21 +117,21 @@ public class BookingDTO implements Serializable{
 		return 0;
 	}
 
-//	public Calendar getStart_Calendar() {
-//		return start_Calendar;
-//	}
-//
-//	public void setStart_Calendar(Calendar start_Calendar) {
-//		this.start_Calendar = start_Calendar;
-//	}
-//
-//	public Calendar getEnd_Calendar() {
-//		return end_Calendar;
-//	}
-//
-//	public void setEnd_Calendar(Calendar end_Calendar) {
-//		this.end_Calendar = end_Calendar;
-//	}
+	public String getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+
+	public String getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
 
 	public Status getStatus() {
 		return status;

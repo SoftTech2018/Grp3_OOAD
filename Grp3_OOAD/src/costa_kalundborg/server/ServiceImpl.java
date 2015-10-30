@@ -58,7 +58,13 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 
 	@Override
 	public ArrayList<PladsDTO> checkBooking(BookingDTO booking) throws Exception {
-		// TODO Auto-generated method stub
+		ArrayList<PladsDTO> listAll = dao.getPladser();
+		ArrayList<PladsDTO> list = null;
+		for(PladsDTO plads : listAll){
+			for(BookingDTO book : plads.getBookings()){
+				
+			}
+		}
 		return null;
 	}
 	
