@@ -108,20 +108,17 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	
 	@Override
 	public BookingDTO createBooking(BookingDTO booking) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.createBooking(booking);
 	}
 
 	@Override
 	public KundeDTO getKunde(String cpr) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.getCustomer(cpr);
 	}
 
 	@Override
 	public BookingDTO getBooking(int id) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.getBooking(id);
 	}
 
 	@Override

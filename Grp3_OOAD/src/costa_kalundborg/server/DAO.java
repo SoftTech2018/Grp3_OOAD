@@ -75,8 +75,9 @@ public class DAO {
 			return status;
 		}
 	
-	public void createBooking(BookingDTO b) {
+	public BookingDTO createBooking(BookingDTO b) {
 		Connector.doUpdate(/*SQL statement med Booking-objektet den får medsendt*/);
+		return null;
 	}
 	
 	public PladsDTO getPlads(int plads) {
