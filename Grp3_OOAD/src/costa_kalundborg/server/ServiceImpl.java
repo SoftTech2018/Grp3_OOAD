@@ -1,6 +1,8 @@
 package costa_kalundborg.server;
 
+import java.awt.List;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -58,14 +60,50 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 
 	@Override
 	public ArrayList<PladsDTO> checkBooking(BookingDTO booking) throws Exception {
+		Calendar start = getCalendar(booking.getStartDate());
+		Calendar end = getCalendar(booking.getEndDate());
+		
 		ArrayList<PladsDTO> listAll = dao.getPladser();
-		ArrayList<PladsDTO> list = null;
+		ArrayList<PladsDTO> list = new ArrayList<PladsDTO>();
+		
+		boolean available;
+		
 		for(PladsDTO plads : listAll){
+			available = true;
 			for(BookingDTO book : plads.getBookings()){
-				
+				if(available){
+					available = dateClear(getCalendar(book.getStartDate()), getCalendar(book.getEndDate()), start, end);
+				} else {
+					break;
+				}
+			}
+			if(available){
+				list.add(plads);
 			}
 		}
-		return null;
+		return list;
+	}
+	
+	private Calendar getCalendar(String date){
+		Calendar output = Calendar.getInstance();
+		output.set(Integer.valueOf(date.substring(6)), Integer.valueOf(date.substring(3,5)), Integer.valueOf(date.substring(0, 2)));
+		return output;
+	}
+
+	
+	/**
+	 * Tjekker om de tilsendte datoer overlapper med datoerne i bookingen. Returnerer true hvis datoerne overlapper.
+	 * @param start_Calendar
+	 * @param end_Calendar
+	 * @return
+	 * @throws Exception
+	 */
+	private boolean dateClear(Calendar startDateBook, Calendar endDateBook, Calendar startDateBooking, Calendar endDateBooking) throws Exception {		
+		if (endDateBooking.compareTo(startDateBook)<0 || startDateBooking.compareTo(endDateBook)>0)
+			return true;
+		else {
+			return false;
+		}
 	}
 	
 	@Override

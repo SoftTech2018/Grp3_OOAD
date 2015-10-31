@@ -39,7 +39,7 @@ public class BookingDTO implements Serializable{
 			this.status = Status.AKTIV;
 			break;
 		default:
-			throw new Exception("Ukendt status på booking.");
+			throw new Exception("Ukendt status pÃ¥ booking.");
 		}
 		this.electric = electric;
 		this.dog = dog;
@@ -51,26 +51,10 @@ public class BookingDTO implements Serializable{
 		this.born = born;
 	}
 
-	/**
-	 * Tjekker om de tilsendte datoer overlapper med datoerne i bookingen. Returnerer true hvis datoerne overlapper.
-	 * @param start_Calendar
-	 * @param end_Calendar
-	 * @return
-	 * @throws Exception
-	 */
-//	public boolean compareCalendar(String start_Calendar, String end_Calendar) throws Exception {
-//		if (start_Calendar.compareTo(end_Calendar) < 0)
-//			throw new Exception("Slut dato er før start dato.");
-//
-//		if (this.start_Calendar.compareTo(end_Calendar)>=0)
-//			return false;
-//		else if (this.end_Calendar.compareTo(start_Calendar)>=0 )
-//			return false;
-//		return true;
-//	}
+
 
 	/**
-	 * Returnerer prisen for den pågældende booking.
+	 * Returnerer prisen for den pÃ¥gÃ¦ldende booking.
 	 * @return
 	 */
 //	public double getPrice(){
@@ -99,7 +83,7 @@ public class BookingDTO implements Serializable{
 //	}
 
 	/**
-	 * Returnerer true hvis bookingen er i højsæson
+	 * Returnerer true hvis bookingen er i hÃ¸jsÃ¦son
 	 * @return
 	 */
 	public boolean highSeason(){
