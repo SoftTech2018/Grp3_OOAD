@@ -25,21 +25,21 @@ public class BookingDTO implements Serializable{
 	public BookingDTO(String startDate, String endDate, String status, double electric, int dog, int xtraPerson, int camel, int voksne, int born) throws Exception{
 		this.startDate = startDate;
 		this.endDate = endDate;
-		switch(status.getStatus()){
-		case BOOKET:
+		switch(status.toUpperCase()){
+		case "BOOKET":
 			this.status = Status.BOOKET;
 			break;
-		case CANCEL:
+		case "CANCEL":
 			this.status = Status.CANCEL;
 			break;
-		case AFHOLDT:
+		case "AFHOLDT":
 			this.status = Status.AFHOLDT;
 			break;
-		case AKTIV:
+		case "AKTIV":
 			this.status = Status.AKTIV;
 			break;
 		default:
-			throw new Exception("Ukendt status pÃ¥ booking.");
+			throw new Exception("Ukendt status på booking.");
 		}
 		this.electric = electric;
 		this.dog = dog;
