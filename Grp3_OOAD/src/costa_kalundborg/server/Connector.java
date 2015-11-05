@@ -10,12 +10,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-
-//import cdio.server.DAL.ScriptRunner;
-import costa_kalundborg.shared.DALException;
-
-
-
 public class Connector{
 
 	private final String
@@ -26,7 +20,7 @@ public class Connector{
 	//	database				= "grp19",  //"jdbcdatabase", // navnet paa din database = dit studienummer
 	//	username				= "grp19", // dit brugernavn = dit studienummer 
 	//	password				= "WxqW2GBF"; // dit password som du har valgt til din database
-	
+
 	/*
 	 * Dette er den lokale Database på din egen computer
 	 */
@@ -39,13 +33,13 @@ public class Connector{
 
 	private Connection conn;
 	private static Statement stm;
-//	private static ScriptRunner runner;
+	//	private static ScriptRunner runner;
 
 	public Connector() throws InstantiationException, IllegalAccessException,
 	ClassNotFoundException, SQLException {
 		conn	= connectToDatabase("jdbc:mysql://"+server+":"+port+"/"+database, username, password);
 		stm		= conn.createStatement();
-//		runner = new ScriptRunner(conn,false,true);
+		//		runner = new ScriptRunner(conn,false,true);
 	}
 
 	/**
@@ -72,35 +66,26 @@ public class Connector{
 		return (Connection) DriverManager.getConnection(url, username, password);
 	}
 
-	public static ResultSet doQuery(String id) throws DALException	{
-		try { 
-			return stm.executeQuery(id); 
-		} catch (SQLException e) { 
-			throw new DALException(e); 
-		}
+	public static ResultSet doQuery(String id) throws SQLException	{
+		return stm.executeQuery(id); 
 	}
 
-	public static int doUpdate(String cmd) throws DALException {
-		try { 
-			return stm.executeUpdate(cmd); 
-		}
-		catch (SQLException e) { 
-			throw new DALException(e); 
-		}
+	public static int doUpdate(String cmd) throws SQLException {
+		return stm.executeUpdate(cmd); 
 	}
-	
-//	public static void runScript() throws DALException {
-//		try {
-//			runner.runScript(new BufferedReader(new FileReader("/Users/JacobWorckJepsen/Dropbox/CDIO/2. Semester/Videregående Programmering/FInal/Database/Script/cdio_db5.sql")));
-//		} catch (FileNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	}
+
+	//	public static void runScript() throws DALException {
+	//		try {
+	//			runner.runScript(new BufferedReader(new FileReader("/Users/JacobWorckJepsen/Dropbox/CDIO/2. Semester/Videregående Programmering/FInal/Database/Script/cdio_db5.sql")));
+	//		} catch (FileNotFoundException e) {
+	//			// TODO Auto-generated catch block
+	//			e.printStackTrace();
+	//		} catch (IOException e) {
+	//			// TODO Auto-generated catch block
+	//			e.printStackTrace();
+	//		} catch (SQLException e) {
+	//			// TODO Auto-generated catch block
+	//			e.printStackTrace();
+	//		}
+	//	}
 }
