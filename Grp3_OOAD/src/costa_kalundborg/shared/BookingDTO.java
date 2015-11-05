@@ -22,7 +22,7 @@ public class BookingDTO implements Serializable{
 	public BookingDTO(){
 	}
 
-	public BookingDTO(String startDate, String endDate, Status status, double electric, int dog, int xtraPerson, int camel, int voksne, int born, KundeDTO kunde, PladsDTO plads) throws Exception{
+	public BookingDTO(String startDate, String endDate, String status, double electric, int dog, int xtraPerson, int camel, int voksne, int born) throws Exception{
 		this.startDate = startDate;
 		this.endDate = endDate;
 		switch(status.getStatus()){
@@ -45,8 +45,6 @@ public class BookingDTO implements Serializable{
 		this.dog = dog;
 		this.xtraPerson = xtraPerson;
 		this.camel = camel;
-		this.kunde = kunde;
-		this.plads = plads;	
 		this.voksne = voksne;
 		this.born = born;
 	}

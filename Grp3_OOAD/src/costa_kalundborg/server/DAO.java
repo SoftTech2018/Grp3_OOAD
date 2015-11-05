@@ -49,7 +49,7 @@ public class DAO {
 		try { 
 			if (!rs.first()) throw new DALException("Booking med id:  " + id + " findes ikke");
 				//start_date, end_date, status, electric, dog, xtraPerson, camel, kunde_id, plads_id
-				b = new BookingDTO (getDate(rs.getString("start_date")), getDate(rs.getString("end_date")), getStatus(rs.getString("status")), rs.getString("electric"), rs.getInt("dog"), rs.getInt("xtraPerson"), rs.getInt("camel"), rs.getInt("kunde_id"), rs.getInt("plads_id"));				
+				b = new BookingDTO (getDate(rs.getString("start_date")), getDate(rs.getString("end_date")), rs.getString("status"), rs.getDouble("electric"), rs.getInt("dog"), rs.getInt("xtraPerson"), rs.getInt("camel"), rs.getInt("voksne"), rs.getInt("born"));				
 				
 		}		
 		catch (SQLException e) {throw new DALException(e); }
@@ -73,6 +73,11 @@ public class DAO {
 		
 		public String getStatus(String status) {
 			return status;
+		}
+		
+		public KundeDTO getKunde(int kunde) {
+			//
+			return
 		}
 	
 	public BookingDTO createBooking(BookingDTO b) {
@@ -100,7 +105,7 @@ public class DAO {
 		{
 			while (rs.next()) 
 			{
-				list.add(new BookingDTO (getDate(rs.getString("start_date")), getDate(rs.getString("end_date")), getStatus(rs.getString("status")), rs.getString("electric"), rs.getInt("dog"), rs.getInt("xtraPerson"), rs.getInt("camel"), rs.getInt("kunde_id"), rs.getInt("plads_id"));
+				list.add(new BookingDTO (getDate(rs.getString("start_date")), getDate(rs.getString("end_date")), rs.getString("status"), rs.getDouble("electric"), rs.getInt("dog"), rs.getInt("xtraPerson"), rs.getInt("camel"), rs.getInt("voksne"), rs.getInt("born")));
 			}
 		}
 		catch (SQLException e) {throw new DALException(e); }
