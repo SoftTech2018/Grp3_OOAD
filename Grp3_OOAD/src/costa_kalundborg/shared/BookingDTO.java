@@ -122,7 +122,7 @@ public class BookingDTO implements Serializable{
 		return false;
 	}
 
-	public double camelPrice(){
+	private double camelPrice(){
 		if (camel <5){
 			return camel * 50;
 		} else {
