@@ -16,7 +16,7 @@ public class KundeDTO implements Serializable {
 	
 	public KundeDTO(String kundeNavn, String cpr, String adresse, String pCode, String city) {
 		this.kundeNavn = kundeNavn;
-		this.cpr = kundeNavn;
+		this.cpr = cpr;
 		this.adresse = adresse;
 		this.pCode = pCode;
 		this.city = city;
