@@ -15,7 +15,7 @@ import costa_kalundborg.shared.PladsDTO;
  */
 public interface ServiceAsync {
 	void checkBooking(BookingDTO booking, AsyncCallback<List<PladsDTO>> callback) throws Exception;
-	void createBooking(BookingDTO booking, AsyncCallback<BookingDTO> callback) throws Exception;
+	void createBooking(BookingDTO booking, KundeDTO kunde, PladsDTO plads, AsyncCallback<BookingDTO> callback) throws Exception;
 	void getKunde(String cpr, AsyncCallback<KundeDTO> callback) throws Exception;
 	void getBooking(int id, AsyncCallback<BookingDTO> callback) throws Exception;
 	void editBooking(int id, AsyncCallback<Void> callback) throws Exception;

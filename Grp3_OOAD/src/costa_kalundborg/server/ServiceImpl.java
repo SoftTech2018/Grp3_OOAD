@@ -102,8 +102,8 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	}
 
 	@Override
-	public BookingDTO createBooking(BookingDTO booking) throws Exception {
-		return dao.createBooking(booking);
+	public BookingDTO createBooking(BookingDTO booking, KundeDTO kunde, PladsDTO plads) throws Exception {
+		return dao.createBooking(booking, kunde, plads);
 	}
 
 	@Override
