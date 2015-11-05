@@ -1,26 +1,16 @@
 package costa_kalundborg.shared;
 
 import java.io.Serializable;
-import java.util.concurrent.TimeUnit;
-
-import com.google.gwt.user.client.rpc.IsSerializable;
+import java.util.Calendar;
 
 public class BookingDTO implements Serializable{
 
-	private String startDate;
-	private String endDate;
+	private String startDate, endDate;
 	private Status status;
 	private double electric;
-	private int dog;
-	private int voksne;
-	private int born;
-	private int xtraPerson;
-	private int camel;
-	private KundeDTO kunde;
-	private PladsDTO plads;
+	private int dog, voksne, born, xtraPerson, camel;
 
-	public BookingDTO(){
-	}
+	public BookingDTO(){}
 
 	public BookingDTO(String startDate, String endDate, String status, double electric, int dog, int xtraPerson, int camel, int voksne, int born) throws Exception{
 		this.startDate = startDate;
@@ -49,54 +39,97 @@ public class BookingDTO implements Serializable{
 		this.born = born;
 	}
 
-
-
 	/**
 	 * Returnerer prisen for den pÃ¥gÃ¦ldende booking.
 	 * @return
 	 */
-//	public double getPrice(){
-//		double price = 0;
-//		long days = getDifferenceDays(start_Calendar, end_Calendar);
-//
-//		if (!highSeason()){
-//			price += days * plads.getLowprice();
-//			price += dog * 10 * days;
-//			price += xtraPerson * 100 * days;
-//			price += camelPrice();
-//			price += electric * 3.75;
-//			price += voksne * 82 * days;
-//			price += born * 42 * days;
-//		} else {
-//			price += days * plads.getPrice();
-//			price += dog * 10 * days;
-//			price += xtraPerson * 100 * days;
-//			price += camelPrice();
-//			price += electric * 3.75;
-//			price += voksne * 87 * days;
-//			price += born * 49 * days;
-//		}
-//
-//		return price;
-//	}
+	public double getPrice(PladsDTO p){
+		double price = 0;
+		int days = countDays(getCalendar(startDate), getCalendar(endDate));
+		
+		if (!highSeason()){
+			price += days * p.getLowprice();
+			price += dog * 10 * days;
+			price += xtraPerson * 100 * days;
+			price += camelPrice();
+			price += electric * 3.75;
+			price += voksne * 82 * days;
+			price += born * 42 * days;
+		} else {
+			price += days * p.getPrice();
+			price += dog * 10 * days;
+			price += xtraPerson * 100 * days;
+			price += camelPrice();
+			price += electric * 3.75;
+			price += voksne * 87 * days;
+			price += born * 49 * days;
+		}
+
+		return price;
+	}
 
 	/**
-	 * Returnerer true hvis bookingen er i hÃ¸jsÃ¦son
+	 * Finder antal dage mellem to datoer
+	 * @param from
+	 * @param to
 	 * @return
 	 */
-	public boolean highSeason(){
-		// to be implemented med start_Calendar og end_Calendar
+	private int countDays(Calendar from, Calendar to) {
+		if (from == null || to == null)
+			return 0;
+		// Set the time part to 0
+		from.set(Calendar.MILLISECOND, 0);
+		from.set(Calendar.SECOND, 0);
+		from.set(Calendar.MINUTE, 0);
+		from.set(Calendar.HOUR_OF_DAY, 0);
+		to.set(Calendar.MILLISECOND, 0);
+		to.set(Calendar.SECOND, 0);
+		to.set(Calendar.MINUTE, 0);
+		to.set(Calendar.HOUR_OF_DAY, 0);
+		int nbJours = 0;
+		for (Calendar c = from ; c.before(to) ; c.add(Calendar.DATE, +1)){
+			nbJours++;
+		}
+		for (Calendar c = from ; c.after(to) ; c.add(Calendar.DATE, -1)){
+			nbJours--;
+		}
+		return nbJours;
+	}
+	
+	private Calendar getCalendar(String date){
+		Calendar output = Calendar.getInstance();
+		output.set(Integer.valueOf(date.substring(6)), Integer.valueOf(date.substring(3,5)), Integer.valueOf(date.substring(0, 2)));
+		return output;
+	}
+
+	/**
+	 * Returnerer true hvis bookingen er i hÃ¸jsÃ¦son. Hvis en af datoerne er i højsæsonen betragtes hele bookingen som i højsæson
+	 * @return
+	 */
+	private boolean highSeason(){
+		String year = endDate.substring(6);
+		Calendar highStart = getCalendar("12-06-"+year);
+		Calendar highEnd = getCalendar("16-08-"+year);
+		
+		// Tjek om slutdato er i højsæsonen
+		if(getCalendar(endDate).compareTo(highEnd) <= 0 && getCalendar(endDate).compareTo(highStart) >=0){
+			return true;			
+		}
+		// Tjek om startdato er i højsæsonen
+		if(getCalendar(startDate).compareTo(highEnd) <= 0 && getCalendar(startDate).compareTo(highStart) >=0){
+			return true;			
+		}
 		return false;
 	}
 
-//	public long getDifferenceDays(Calendar d1, Calendar d2) {
-//		long diff = d2.compareTo(d1);
-//		return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
-//	}
-
 	public double camelPrice(){
-		// TO DO
-		return 0;
+		if (camel <5){
+			return camel * 50;
+		} else {
+			int foo = camel%5;
+			int bar = camel/5;
+			return (foo*50) + bar * 200;
+		}
 	}
 
 	public String getStartDate() {
@@ -153,22 +186,6 @@ public class BookingDTO implements Serializable{
 
 	public void setCamel(int camel) {
 		this.camel = camel;
-	}
-
-	public KundeDTO getKunde() {
-		return kunde;
-	}
-
-	public void setKunde(KundeDTO kunde) {
-		this.kunde = kunde;
-	}
-
-	public PladsDTO getPlads() {
-		return plads;
-	}
-
-	public void setPlads(PladsDTO plads) {
-		this.plads = plads;
 	}
 
 	public int getVoksne() {
