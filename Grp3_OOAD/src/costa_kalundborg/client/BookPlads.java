@@ -78,45 +78,7 @@ public class BookPlads extends Composite {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-//				Button vælg = new Button();
-//				vælg.setText("Vælg");
-//				ArrayList<String> list = new ArrayList<String>();
-//				type = new ListBox();
-//				for (int i = 1; i<10; i++){
-//					list.add(getDescription(i));
-//				}
-//				for (String o : list){
-//					type.addItem(o);
-//				}
-//				ft.setText(5, 0, "Ledige pladser");
-//				ft.setWidget(5, 1, type);
-//				ft.setWidget(6, 0, vælg);
-//				vælg.addClickHandler(new ClickHandler(){
-//
-//					@Override
-//					public void onClick(ClickEvent event) {
-						
-//						
-//						book.addClickHandler(new ClickHandler(){
-//
-//							@Override
-//							public void onClick(ClickEvent event) {
-//								// TODO Auto-generated method stub
-//								Window.alert("Plads booket");
-//								run();
-//							}
-//							
-//						});
-						
-						
-						
-						//int index = type.getSelectedIndex();
-						//int idnumber = index+1; //denne variabel skal sendes ned i databasen till booking
-//						idtest.setText(Integer.toString(idnumber));
-//						ft.setWidget(7, 1, idtest);
-//					}
-					
-//				});
+
 				startDate = date1.getText();
 				endDate = date2.getText();
 				adults = Integer.parseInt(adult.getText());
@@ -245,57 +207,9 @@ public class BookPlads extends Composite {
 			
 		});
 		ft.setWidget(6, 0, ok);
-//		
-//		ft.setText(4, 0, "Beboelse");
-//		type = new ListBox();
-//		type.addItem("Telt");
-//		type.addItem("Campingvogn");
-//		type.addItem("2 pers. hytte - 12m2");
-//		type.addItem("2 pers. hytte - 14m2");
-//		type.addItem("4 pers. hytte - 22m2");
-//		type.addItem("4-6 pers. luksushytte - 25m2");
-//		type.addItem("4-6 pers. luksushytte+ - 25m2");
-		
-//		getResidenceType(type.getSelectedIndex());
-		
-//		ft.setWidget(4, 1, type);
-		
-		
-//		ft.setText(0, 0, "Navn");
-//		name = new TextBox();
-//		ft.setWidget(0, 1, name);
-//		
-//		ft.setText(1, 0, "Adresse");
-//		address = new TextBox();
-//		ft.setWidget(1, 1, address);
-//		
-//		ft.setText(2, 0, "Postnummer");
-//		zip = new TextBox();
-//		ft.setWidget(2, 1, zip);
-//		
-//		ft.setText(3, 0, "Start dato");
-//		zip = new TextBox();
-//		ft.setWidget(3, 1, zip);
-//		
-//		ft.setText(4, 0, "Slut dato");
-//		zip = new TextBox();
-//		ft.setWidget(4, 1, zip);
-//		
-//		ft.setText(5, 0, "Telefon");
-//		zip = new TextBox();
-//		ft.setWidget(5, 1, zip);
-//		
-//		ft.setText(6, 0, "Email");
-//		zip = new TextBox();
-//		ft.setWidget(6, 1, zip);
-		
-		
-		
-		
 		vPane.add(ft);
 	}
-	
-	
+
 	private String getDescription(int n){
 		
 		switch(n) {
