@@ -24,7 +24,7 @@ public class DAO {
 	}
 	
 	public KundeDTO getCustomer(String cpr) {
-		ResultSet rs = Connector.doQuery(/*SQL statement med cpr'en den får medsendt*/);
+		ResultSet rs = Connector.doQuery("SELECT * FROM kunde WHERE cpr = " + cpr /*SQL statement med cpr'en den får medsendt*/);
 		try { 
 			if (!rs.first()) throw new DALException("Kunde " + cpr + " findes ikke");
 				//kunde_navn, cpr, adresse, pCode, city, id
@@ -34,17 +34,11 @@ public class DAO {
 	}
 	
 	public void createCustomer(KundeDTO c) {
-		Connector.doUpdate(/*SQL statement med Kunde-objektet den får medsendt*/);
-//		c.getKundeNavn()
-//		c.getCpr()
-//		c.getAdresse()
-//		c.getpCode()
-//		c.getCity()
-		
+		Connector.doUpdate("INSERT INTO booking VALUES (" + c.getKundeNavn() + "," + c.getCpr() + "," + c.getAdresse() + "," + c.getpCode() + "," + c.getCity() + ")");
 	}
 	
 	public BookingDTO getBooking(int id) {
-		ResultSet rs = Connector.doQuery(/*SQL statement med id'en den får medsendt*/);
+		ResultSet rs = Connector.doQuery("SELECT * FROM booking WHERE booking_id = " + id /*SQL statement med id'en den får medsendt*/);
 		BookingDTO b;
 		try { 
 			if (!rs.first()) throw new DALException("Booking med id:  " + id + " findes ikke");
@@ -69,24 +63,15 @@ public class DAO {
 //			dateReturn.set(yearInt, monthInt, dayInt);
 			return date;
 			
-		}
-		
-		public String getStatus(String status) {
-			return status;
-		}
-		
-		public KundeDTO getKunde(int kunde) {
-			//
-			return
-		}
+		}		
 	
 	public BookingDTO createBooking(BookingDTO b) {
-		Connector.doUpdate(/*SQL statement med Booking-objektet den får medsendt*/);
+		Connector.doUpdate("INSERT INTO booking VALUES (" + b.getStartDate() + "," + b.getEndDate() + "," + b.getStatus() + "," + b.getElectric() + "," + b.getDog() + "," + b.getXtraPerson() + "," + b.getCamel() + "," + b.getKunde() + "," + b.getPlads() + ")");
 		return null;
 	}
 	
 	public PladsDTO getPlads(int plads) {
-		ResultSet rs = Connector.doQuery(/*SQL statement med id'en den får medsendt*/);
+		ResultSet rs = Connector.doQuery("SELECT * FROM plads WHERE plads_id = "+ plads/*SQL statement med pladsen den får medsendt*/);
 		PladsDTO p;
 		try { 
 			if (!rs.first()) throw new DALException("Booking med id:  " + plads + " findes ikke");
@@ -100,7 +85,7 @@ public class DAO {
 	
 	public ArrayList<BookingDTO> getBookings(int plads) {
 		ArrayList<BookingDTO> list = new ArrayList<BookingDTO>();
-		ResultSet rs = Connector.doQuery(/*Sql statement med id'en den får medsendt*/);
+		ResultSet rs = Connector.doQuery("SELECT * FROM booking WHERE plads_id = " + plads /*Sql statement med pladsen den får medsendt*/);
 		try
 		{
 			while (rs.next()) 
@@ -114,7 +99,7 @@ public class DAO {
 	
 	public ArrayList<PladsDTO> getPladser() {
 		ArrayList<PladsDTO> list = new ArrayList<PladsDTO>();
-		ResultSet rs = Connector.doQuery(/* SQL statement for alle pladser*/);
+		ResultSet rs = Connector.doQuery("SELECT * FROM plads"/* SQL statement for alle pladser*/);
 		try
 		{
 			while (rs.next())
