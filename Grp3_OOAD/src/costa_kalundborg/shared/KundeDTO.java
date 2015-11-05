@@ -12,11 +12,9 @@ public class KundeDTO implements Serializable {
 	private int id;
 
 	public KundeDTO(){
-		
 	}
 	
-	public KundeDTO(String kundeNavn, String cpr, String adresse, String pCode,
-			String city) {
+	public KundeDTO(String kundeNavn, String cpr, String adresse, String pCode, String city) {
 		this.kundeNavn = kundeNavn;
 		this.cpr = kundeNavn;
 		this.adresse = adresse;
