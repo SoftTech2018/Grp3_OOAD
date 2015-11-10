@@ -1,5 +1,6 @@
 package costa_kalundborg.server;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -19,7 +20,21 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	private DAO dao;
 
 	public ServiceImpl(){
-		dao = new DAO();
+		try {
+			dao = new DAO();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	//

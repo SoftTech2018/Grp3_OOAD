@@ -1,9 +1,5 @@
 package costa_kalundborg.server;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -12,34 +8,22 @@ import java.sql.Statement;
 
 public class Connector{
 
-	private final String
-	/*
-	 * Dette er den centrale Database stillet til rådighed af Stig/Ronnie
-	 */
-	//	server					= "62.79.16.16",  // database-serveren
-	//	database				= "grp19",  //"jdbcdatabase", // navnet paa din database = dit studienummer
-	//	username				= "grp19", // dit brugernavn = dit studienummer 
-	//	password				= "WxqW2GBF"; // dit password som du har valgt til din database
-
 	/*
 	 * Dette er den lokale Database på din egen computer
 	 */
-	server					= "localhost",  // database-serveren
-	database				= "19_db",  //"jdbcdatabase", // navnet paa din database = dit studienummer
-	username				= "root", // dit brugernavn = dit studienummer 
-	password				= ""; // dit password som du har valgt til din database
-
-	private final int port = 3306;
-
+	private final String
+	SERVER					= "localhost",  // database-serveren
+	DATABASE				= "19_db",  //"jdbcdatabase", // navnet paa din database = dit studienummer
+	USERNAME				= "root", // dit brugernavn = dit studienummer 
+	PASSWORD				= ""; // dit password som du har valgt til din database
+	private final int PORT = 3306;
 	private Connection conn;
-	private static Statement stm;
-	//	private static ScriptRunner runner;
+	private Statement stm;
 
 	public Connector() throws InstantiationException, IllegalAccessException,
 	ClassNotFoundException, SQLException {
-		conn	= connectToDatabase("jdbc:mysql://"+server+":"+port+"/"+database, username, password);
+		conn	= connectToDatabase("jdbc:mysql://"+SERVER+":"+PORT+"/"+DATABASE, USERNAME, PASSWORD);
 		stm		= conn.createStatement();
-		//		runner = new ScriptRunner(conn,false,true);
 	}
 
 	/**
@@ -66,26 +50,11 @@ public class Connector{
 		return (Connection) DriverManager.getConnection(url, username, password);
 	}
 
-	public static ResultSet doQuery(String id) throws SQLException	{
+	public ResultSet doQuery(String id) throws SQLException	{
 		return stm.executeQuery(id); 
 	}
 
-	public static int doUpdate(String cmd) throws SQLException {
+	public int doUpdate(String cmd) throws SQLException {
 		return stm.executeUpdate(cmd); 
 	}
-
-	//	public static void runScript() throws DALException {
-	//		try {
-	//			runner.runScript(new BufferedReader(new FileReader("/Users/JacobWorckJepsen/Dropbox/CDIO/2. Semester/Videregående Programmering/FInal/Database/Script/cdio_db5.sql")));
-	//		} catch (FileNotFoundException e) {
-	//			// TODO Auto-generated catch block
-	//			e.printStackTrace();
-	//		} catch (IOException e) {
-	//			// TODO Auto-generated catch block
-	//			e.printStackTrace();
-	//		} catch (SQLException e) {
-	//			// TODO Auto-generated catch block
-	//			e.printStackTrace();
-	//		}
-	//	}
 }
