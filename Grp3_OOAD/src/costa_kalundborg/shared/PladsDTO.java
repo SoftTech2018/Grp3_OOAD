@@ -7,14 +7,14 @@ import java.util.Date;
 public class PladsDTO implements Serializable{
 
 	private int plads_id;
-	private Type type;
+	private PladsType type;
 	private double price, lowprice;
 
-	private enum Type {
-		LILLE_TELT,
-		STOR_TELT,
-		HYTTE,
-		LUKSUS_HYTTE }
+//	private enum Type {
+//		LILLE_TELT,
+//		STOR_TELT,
+//		HYTTE,
+//		LUKSUS_HYTTE }
 
 	public PladsDTO(){
 	}
@@ -25,16 +25,16 @@ public class PladsDTO implements Serializable{
 		this.lowprice = lowprice;
 		switch(type){
 		case "LILLE_TELT":
-			this.type = Type.LILLE_TELT;
+			this.type = PladsType.LILLE_TELT;
 			break;
 		case "STOR_TELT":
-			this.type = Type.STOR_TELT;
+			this.type = PladsType.STOR_TELT;
 			break;
 		case "HYTTE":
-			this.type = Type.HYTTE;
+			this.type = PladsType.HYTTE;
 			break;
 		case "LUKSUS_HYTTE":
-			this.type = Type.LUKSUS_HYTTE;
+			this.type = PladsType.LUKSUS_HYTTE;
 			break;
 		default:
 			throw new Exception("Ukendt pladstype!");
@@ -56,16 +56,16 @@ public class PladsDTO implements Serializable{
 	public void setType(String type) throws Exception {
 		switch(type){
 		case "LILLE_TELT":
-			this.type = Type.LILLE_TELT;
+			this.type = PladsType.LILLE_TELT;
 			break;
 		case "STOR_TELT":
-			this.type = Type.STOR_TELT;
+			this.type = PladsType.STOR_TELT;
 			break;
 		case "HYTTE":
-			this.type = Type.HYTTE;
+			this.type = PladsType.HYTTE;
 			break;
 		case "LUKSUS_HYTTE":
-			this.type = Type.LUKSUS_HYTTE;
+			this.type = PladsType.LUKSUS_HYTTE;
 			break;
 		default:
 			throw new Exception("Ukendt pladstype!");
