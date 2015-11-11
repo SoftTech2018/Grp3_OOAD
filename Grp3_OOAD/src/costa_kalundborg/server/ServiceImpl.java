@@ -95,10 +95,98 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		return list;
 	}
 
+	
+	/**
+	 * Returnerer prisen for den pÃ¥gÃ¦ldende booking.
+	 * @return
+	 */
+	public double getPrice(PladsDTO p, BookingDTO booking){
+		double price = 0;
+		int days = countDays(getCalendar(booking.getStartDate()), getCalendar(booking.getEndDate()));
+		
+		if (!highSeason(booking)){
+			price += days * p.getLowprice();
+			price += booking.getDog() * 10 * days;
+			price += booking.getXtraPerson() * 100 * days;
+			price += camelPrice(booking);
+			price += booking.getElectric() * 3.75;
+			price += booking.getVoksne() * 82 * days;
+			price += booking.getBorn() * 42 * days;
+		} else {
+			price += days * p.getPrice();
+			price += booking.getDog() * 10 * days;
+			price += booking.getXtraPerson() * 100 * days;
+			price += camelPrice(booking);
+			price += booking.getElectric() * 3.75;
+			price += booking.getVoksne() * 87 * days;
+			price += booking.getBorn() * 49 * days;
+		}
+
+		return price;
+	}
+
+	/**
+	 * Finder antal dage mellem to datoer
+	 * @param from
+	 * @param to
+	 * @return
+	 */
+	private int countDays(Calendar from, Calendar to) {
+		if (from == null || to == null)
+			return 0;
+		// Set the time part to 0
+		from.set(Calendar.MILLISECOND, 0);
+		from.set(Calendar.SECOND, 0);
+		from.set(Calendar.MINUTE, 0);
+		from.set(Calendar.HOUR_OF_DAY, 0);
+		to.set(Calendar.MILLISECOND, 0);
+		to.set(Calendar.SECOND, 0);
+		to.set(Calendar.MINUTE, 0);
+		to.set(Calendar.HOUR_OF_DAY, 0);
+		int nbJours = 0;
+		for (Calendar c = from ; c.before(to) ; c.add(Calendar.DATE, +1)){
+			nbJours++;
+		}
+		for (Calendar c = from ; c.after(to) ; c.add(Calendar.DATE, -1)){
+			nbJours--;
+		}
+		return nbJours;
+	}
+	
 	private Calendar getCalendar(String date){
 		Calendar output = Calendar.getInstance();
 		output.set(Integer.valueOf(date.substring(6)), Integer.valueOf(date.substring(3,5)), Integer.valueOf(date.substring(0, 2)));
 		return output;
+	}
+
+	/**
+	 * Returnerer true hvis bookingen er i hÃ¸jsÃ¦son. Hvis en af datoerne er i højsæsonen betragtes hele bookingen som i højsæson
+	 * @return
+	 */
+	private boolean highSeason(BookingDTO booking){
+		String year = booking.getEndDate().substring(6);
+		Calendar highStart = getCalendar("12-06-"+year);
+		Calendar highEnd = getCalendar("16-08-"+year);
+		
+		// Tjek om slutdato er i højsæsonen
+		if(getCalendar(booking.getEndDate()).compareTo(highEnd) <= 0 && getCalendar(booking.getEndDate()).compareTo(highStart) >=0){
+			return true;			
+		}
+		// Tjek om startdato er i højsæsonen
+		if(getCalendar(booking.getStartDate()).compareTo(highEnd) <= 0 && getCalendar(booking.getStartDate()).compareTo(highStart) >=0){
+			return true;			
+		}
+		return false;
+	}
+
+	private double camelPrice(BookingDTO booking){
+		if (booking.getCamel() <5){
+			return booking.getCamel() * 50;
+		} else {
+			int foo = booking.getCamel()%5;
+			int bar = booking.getCamel()/5;
+			return (foo*50) + bar * 200;
+		}
 	}
 
 	/**

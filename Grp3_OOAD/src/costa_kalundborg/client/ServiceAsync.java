@@ -1,7 +1,5 @@
 package costa_kalundborg.client;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -18,6 +16,7 @@ public interface ServiceAsync {
 	void createBooking(BookingDTO booking, KundeDTO kunde, PladsDTO plads, AsyncCallback<BookingDTO> callback) throws Exception;
 	void getKunde(String cpr, AsyncCallback<KundeDTO> callback) throws Exception;
 	void getBooking(int id, AsyncCallback<BookingDTO> callback) throws Exception;
+	void getPrice(PladsDTO p, BookingDTO booking, AsyncCallback<Double> callback) throws Exception;
 	void editBooking(int id, AsyncCallback<Void> callback) throws Exception;
 	void deleteBooking(int id, AsyncCallback<Void> callback) throws Exception;
 	void registerArrival(KundeDTO c, AsyncCallback<Void> callback) throws Exception;

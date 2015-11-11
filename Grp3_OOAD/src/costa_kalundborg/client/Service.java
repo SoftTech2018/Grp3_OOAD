@@ -1,7 +1,5 @@
 package costa_kalundborg.client;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import com.google.gwt.user.client.rpc.RemoteService;
@@ -20,6 +18,7 @@ public interface Service extends RemoteService {
 	BookingDTO createBooking(BookingDTO booking, KundeDTO kunde, PladsDTO plads) throws Exception;
 	KundeDTO getKunde(String cpr) throws Exception;
 	BookingDTO getBooking(int id) throws Exception;
+	double getPrice(PladsDTO p, BookingDTO booking) throws Exception;
 	void editBooking(int id) throws Exception;
 	void deleteBooking(int id) throws Exception;
 	void registerArrival(KundeDTO c) throws Exception;
