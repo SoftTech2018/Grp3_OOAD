@@ -8,8 +8,13 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import costa_kalundborg.client.Service;
 import costa_kalundborg.shared.BookingDTO;
+import costa_kalundborg.shared.DALException;
+import costa_kalundborg.shared.HyttePladsDTO;
 import costa_kalundborg.shared.KundeDTO;
+import costa_kalundborg.shared.LillePladsDTO;
 import costa_kalundborg.shared.PladsDTO;
+import costa_kalundborg.shared.StorPladsDTO;
+import costa_kalundborg.shared.TeltPladsDTO;
 
 /**
  * The server-side implementation of the RPC service.
@@ -52,18 +57,29 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 //	}
 
 	@Override
-	public ArrayList<PladsDTO> checkBooking(BookingDTO booking) throws Exception {
+	public ArrayList<PladsDTO> checkBooking(BookingDTO booking) throws DALException {
+//		ArrayList<PladsDTO> test = new ArrayList<PladsDTO>();
+//		test.add(new LillePladsDTO(1,340,340));
+//		test.add(new StorPladsDTO(2,340,340));
+//		test.add(new HyttePladsDTO(3,340,340));
+//		test.add(new TeltPladsDTO(4,340,340));
+//		return test;
+	
 		Calendar start = getCalendar(booking.getStartDate());
 		Calendar end = getCalendar(booking.getEndDate());
 		ArrayList<PladsDTO> listAll = dao.getPladser();
 		ArrayList<PladsDTO> list = new ArrayList<PladsDTO>();
 		boolean available;
-
+		
 		for(PladsDTO plads : listAll){
 			available = true;
 			for(BookingDTO book : dao.getBookings(plads)){
 				if(available){
-					available = dateClear(getCalendar(book.getStartDate()), getCalendar(book.getEndDate()), start, end);
+					try {
+						available = dateClear(getCalendar(book.getStartDate()), getCalendar(book.getEndDate()), start, end);
+					} catch (Exception e) {
+						throw new DALException(e);
+					}
 				} else {
 					break;
 				}
@@ -185,52 +201,52 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	}
 
 	@Override
-	public BookingDTO createBooking(BookingDTO booking, KundeDTO kunde, PladsDTO plads) throws Exception {
+	public BookingDTO createBooking(BookingDTO booking, KundeDTO kunde, PladsDTO plads) throws DALException {
 		return dao.createBooking(booking, kunde, plads);
 	}
 
 	@Override
-	public KundeDTO getKunde(String cpr) throws Exception {
+	public KundeDTO getKunde(String cpr) throws DALException {
 		return dao.getCustomer(cpr);
 	}
 
 	@Override
-	public BookingDTO getBooking(int id) throws Exception {
+	public BookingDTO getBooking(int id) throws DALException {
 		return dao.getBooking(id);
 	}
 
 	@Override
-	public void editBooking(int id) throws Exception {
+	public void editBooking(int id) throws DALException {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void deleteBooking(int id) throws Exception {
+	public void deleteBooking(int id) throws DALException {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void registerArrival(KundeDTO c) throws Exception {
+	public void registerArrival(KundeDTO c) throws DALException {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public double checkout(KundeDTO c, int id) throws Exception {
+	public double checkout(KundeDTO c, int id) throws DALException {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public void rentCamel(KundeDTO c, int number) throws Exception {
+	public void rentCamel(KundeDTO c, int number) throws DALException {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void addElectricUsage(int id, double amount) throws Exception {
+	public void addElectricUsage(int id, double amount) throws DALException {
 		// TODO Auto-generated method stub
 
 	}

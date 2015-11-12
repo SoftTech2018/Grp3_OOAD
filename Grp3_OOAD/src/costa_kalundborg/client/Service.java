@@ -1,11 +1,13 @@
 package costa_kalundborg.client;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 import costa_kalundborg.shared.BookingDTO;
+import costa_kalundborg.shared.DALException;
 import costa_kalundborg.shared.KundeDTO;
 import costa_kalundborg.shared.PladsDTO;
 
@@ -14,15 +16,15 @@ import costa_kalundborg.shared.PladsDTO;
  */
 @RemoteServiceRelativePath("greet")
 public interface Service extends RemoteService {
-	List<PladsDTO> checkBooking(BookingDTO booking) throws Exception;
-	BookingDTO createBooking(BookingDTO booking, KundeDTO kunde, PladsDTO plads) throws Exception;
-	KundeDTO getKunde(String cpr) throws Exception;
-	BookingDTO getBooking(int id) throws Exception;
-	double getPrice(PladsDTO p, BookingDTO booking) throws Exception;
-	void editBooking(int id) throws Exception;
-	void deleteBooking(int id) throws Exception;
-	void registerArrival(KundeDTO c) throws Exception;
-	double checkout(KundeDTO c, int id) throws Exception;
-	void rentCamel(KundeDTO c, int number) throws Exception;
-	void addElectricUsage(int id, double amount) throws Exception;
+	ArrayList<PladsDTO> checkBooking(BookingDTO booking) throws DALException;
+	BookingDTO createBooking(BookingDTO booking, KundeDTO kunde, PladsDTO plads) throws DALException;
+	KundeDTO getKunde(String cpr) throws DALException;
+	BookingDTO getBooking(int id) throws DALException;
+	double getPrice(PladsDTO p, BookingDTO booking) throws DALException;
+	void editBooking(int id) throws DALException;
+	void deleteBooking(int id) throws DALException;
+	void registerArrival(KundeDTO c) throws DALException;
+	double checkout(KundeDTO c, int id) throws DALException;
+	void rentCamel(KundeDTO c, int number) throws DALException;
+	void addElectricUsage(int id, double amount) throws DALException;
 }

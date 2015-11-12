@@ -1,6 +1,8 @@
 package costa_kalundborg.shared;
 
-public class TeltPladsDTO extends PladsDTO{
+import java.io.Serializable;
+
+public class TeltPladsDTO extends PladsDTO implements Serializable{
 	
 	public TeltPladsDTO(){
 		super();

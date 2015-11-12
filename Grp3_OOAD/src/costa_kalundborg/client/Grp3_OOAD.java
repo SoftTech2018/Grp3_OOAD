@@ -13,7 +13,7 @@ public class Grp3_OOAD implements EntryPoint {
 	/**
 	 * Create a remote service proxy to talk to the server-side Greeting service.
 	 */
-	private final ServiceAsync service = GWT.create(Service.class);
+	private ServiceAsync service = GWT.create(Service.class);
 
 	/**
 	 * This is the entry point method.

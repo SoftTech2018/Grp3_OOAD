@@ -13,9 +13,9 @@ public class Connector{
 	 */
 	private final String
 	SERVER					= "localhost",  // database-serveren
-	DATABASE				= "19_db",  //"jdbcdatabase", // navnet paa din database = dit studienummer
+	DATABASE				= "ooad",  //"jdbcdatabase", // navnet paa din database = dit studienummer
 	USERNAME				= "root", // dit brugernavn = dit studienummer 
-	PASSWORD				= ""; // dit password som du har valgt til din database
+	PASSWORD				= "batistuta9"; // dit password som du har valgt til din database
 	private final int PORT = 3306;
 	private Connection conn;
 	private Statement stm;
