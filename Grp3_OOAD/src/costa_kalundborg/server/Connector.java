@@ -20,7 +20,7 @@ public class Connector{
 	private Connection conn;
 	private Statement stm;
 
-	public Connector() throws InstantiationException, IllegalAccessException,
+	protected Connector() throws InstantiationException, IllegalAccessException,
 	ClassNotFoundException, SQLException {
 		conn	= connectToDatabase("jdbc:mysql://"+SERVER+":"+PORT+"/"+DATABASE, USERNAME, PASSWORD);
 		stm		= conn.createStatement();
@@ -50,11 +50,11 @@ public class Connector{
 		return (Connection) DriverManager.getConnection(url, username, password);
 	}
 
-	public ResultSet doQuery(String id) throws SQLException	{
+	protected ResultSet doQuery(String id) throws SQLException	{
 		return stm.executeQuery(id); 
 	}
 
-	public int doUpdate(String cmd) throws SQLException {
+	protected int doUpdate(String cmd) throws SQLException {
 		return stm.executeUpdate(cmd); 
 	}
 }
