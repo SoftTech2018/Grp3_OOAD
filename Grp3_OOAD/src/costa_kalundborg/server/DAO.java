@@ -6,8 +6,11 @@ import java.util.ArrayList;
 
 import costa_kalundborg.shared.BookingDTO;
 import costa_kalundborg.shared.DALException;
+import costa_kalundborg.shared.HyttePladsDTO;
 import costa_kalundborg.shared.KundeDTO;
+import costa_kalundborg.shared.LillePladsDTO;
 import costa_kalundborg.shared.PladsDTO;
+import costa_kalundborg.shared.StorPladsDTO;
 
 
 public class DAO {	
@@ -79,15 +82,28 @@ public class DAO {
 		PladsDTO p;
 		try { 
 			ResultSet rs = con.doQuery("SELECT * FROM plads WHERE plads_id = "+ plads/*SQL statement med pladsen den får medsendt*/);
-			if (!rs.first()) 
-				throw new DALException("Booking med id:  " + plads + " findes ikke");
-			//start_date, end_date, status, electric, dog, xtraPerson, camel, kunde_id, plads_id
-			p = new PladsDTO (rs.getInt("plads_id"), rs.getString("type"), rs.getDouble("price"), rs.getDouble("lowprice"));				
+			if (!rs.first()) {
+				throw new DALException("Booking med id:  " + plads + " findes ikke");				
+			}
+
+			switch(rs.getString("type").toUpperCase()){
+			case "LILLE":
+				p = new LillePladsDTO(rs.getInt("plads_id"), rs.getDouble("price"), rs.getDouble("lowprice"));
+			break;
+			case "STOR":
+				p = new StorPladsDTO(rs.getInt("plads_id"), rs.getDouble("price"), rs.getDouble("lowprice"));
+			break;
+			case "HYTTE":
+				p = new HyttePladsDTO(rs.getInt("plads_id"), rs.getDouble("price"), rs.getDouble("lowprice"));
+			break;
+			default:
+				throw new DALException("Ukendt pladstype.");
+			}			
 		}		
 		catch (Exception e) {
 			throw new DALException(e); 
 		}
-		return p; /*Resultat fra database Booking*/
+		return p;
 	}
 
 	public ArrayList<BookingDTO> getBookings(int plads) throws DALException {
@@ -109,10 +125,22 @@ public class DAO {
 		ArrayList<PladsDTO> list = new ArrayList<PladsDTO>();
 		try	{
 			ResultSet rs = con.doQuery("SELECT * FROM plads"/* SQL statement for alle pladser*/);
-			while (rs.next())
-			{
-				int plads = rs.getInt("plads_id");
-				list.add(new PladsDTO (plads, rs.getString("type"), rs.getDouble("price"), rs.getDouble("lowprice")));
+			while (rs.next()){
+				PladsDTO p;
+				switch(rs.getString("type").toUpperCase()){
+				case "LILLE":
+					p = new LillePladsDTO(rs.getInt("plads_id"), rs.getDouble("price"), rs.getDouble("lowprice"));
+				break;
+				case "STOR":
+					p = new StorPladsDTO(rs.getInt("plads_id"), rs.getDouble("price"), rs.getDouble("lowprice"));
+				break;
+				case "HYTTE":
+					p = new HyttePladsDTO(rs.getInt("plads_id"), rs.getDouble("price"), rs.getDouble("lowprice"));
+				break;
+				default:
+					throw new DALException("Ukendt pladstype.");
+				}
+				list.add(p);
 			}
 		}
 		catch (Exception e) {

@@ -1,4 +1,4 @@
-package costa_kalundborg.client;
+package costa_kalundborg.client.content;
 
 import java.util.List;
 
@@ -13,8 +13,10 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import costa_kalundborg.client.ServiceAsync;
 import costa_kalundborg.shared.BookingDTO;
 import costa_kalundborg.shared.KundeDTO;
+import costa_kalundborg.shared.LillePladsDTO;
 import costa_kalundborg.shared.PladsDTO;
 import costa_kalundborg.shared.Status;
 
@@ -164,7 +166,7 @@ public class BookPlads extends Composite {
 											postnummer = zip.getText();
 											by = town.getText();
 											pladsId = type.getSelectedIndex()+1;
-											PladsDTO pls = new PladsDTO();
+											PladsDTO pls = new LillePladsDTO();
 											pls.setPlads_id(pladsId);
 											try {
 												service.createBooking(new BookingDTO(startDate, endDate, "ledig", 0.0, dogg, xPerss, 0, adults, children), new KundeDTO(kundenavn, kundeCpr, adresse, postnummer, by), pls, new AsyncCallback<BookingDTO>(){

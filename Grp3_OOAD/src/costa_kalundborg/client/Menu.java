@@ -10,6 +10,8 @@ import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import costa_kalundborg.client.content.BookPlads;
+
 public class Menu extends Composite{
 	
 	private ServiceAsync service;
