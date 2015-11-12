@@ -58,37 +58,37 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 
 	@Override
 	public ArrayList<PladsDTO> checkBooking(BookingDTO booking) throws DALException {
-//		ArrayList<PladsDTO> test = new ArrayList<PladsDTO>();
-//		test.add(new LillePladsDTO(1,340,340));
-//		test.add(new StorPladsDTO(2,340,340));
-//		test.add(new HyttePladsDTO(3,340,340));
-//		test.add(new TeltPladsDTO(4,340,340));
-//		return test;
+		ArrayList<PladsDTO> test = new ArrayList<PladsDTO>();
+		test.add(new LillePladsDTO(101,25,25));
+		test.add(new StorPladsDTO(201,40,40));
+		test.add(new HyttePladsDTO(303,340,340));
+		test.add(new TeltPladsDTO(404,0,0));
+		return test;
 	
-		Calendar start = getCalendar(booking.getStartDate());
-		Calendar end = getCalendar(booking.getEndDate());
-		ArrayList<PladsDTO> listAll = dao.getPladser();
-		ArrayList<PladsDTO> list = new ArrayList<PladsDTO>();
-		boolean available;
-		
-		for(PladsDTO plads : listAll){
-			available = true;
-			for(BookingDTO book : dao.getBookings(plads)){
-				if(available){
-					try {
-						available = dateClear(getCalendar(book.getStartDate()), getCalendar(book.getEndDate()), start, end);
-					} catch (Exception e) {
-						throw new DALException(e);
-					}
-				} else {
-					break;
-				}
-			}
-			if(available){
-				list.add(plads);
-			}
-		}
-		return list;
+//		Calendar start = getCalendar(booking.getStartDate());
+//		Calendar end = getCalendar(booking.getEndDate());
+//		ArrayList<PladsDTO> listAll = dao.getPladser();
+//		ArrayList<PladsDTO> list = new ArrayList<PladsDTO>();
+//		boolean available;
+//		
+//		for(PladsDTO plads : listAll){
+//			available = true;
+//			for(BookingDTO book : dao.getBookings(plads)){
+//				if(available){
+//					try {
+//						available = dateClear(getCalendar(book.getStartDate()), getCalendar(book.getEndDate()), start, end);
+//					} catch (Exception e) {
+//						throw new DALException(e);
+//					}
+//				} else {
+//					break;
+//				}
+//			}
+//			if(available){
+//				list.add(plads);
+//			}
+//		}
+//		return list;
 	}
 
 	

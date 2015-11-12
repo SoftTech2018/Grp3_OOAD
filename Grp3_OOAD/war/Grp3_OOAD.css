@@ -1,34 +1,313 @@
-/** Add css rules here for your application. */
-
-
-/** Example rules used by the template application (remove for your app) */
-h1 {
-  font-size: 2em;
-  font-weight: bold;
-  color: #777777;
-  margin: 40px 0px 70px;
-  text-align: center;
+html {
+	margin: auto;
+	margin-top: 5px;
+	background-color: white;
 }
 
-.sendButton {
-  display: block;
-  font-size: 16pt;
+.TextBox {
+	font-size: 16pt;
+	width: 200px;
 }
 
-/** Most GWT widgets already have a style name defined */
-.gwt-DialogBox {
-  width: 400px;
+.TextBox-Startside{
+	font-size: 16pt;
+	width: 864px;
 }
 
-.dialogVPanel {
-  margin: 5px;
+
+.Recept-Error {
+	color: red;
+	font-size: 10pt;
 }
 
-.serverResponseLabelError {
-  color: red;
+.Recept-Positiv{
+	color: green;
+	font-size: 10pt;
 }
 
-/** Set ids using widget.getElement().setId("idOfElement") */
-#closeButton {
-  margin: 15px 6px 6px;
+.TextBox-Ret{
+	font-size: 10pt;
+	width: 90%;
+	maring-left: auto;
+	margin-right: auto;
+	height: 12px;
+}
+
+.TextBox-RetError{
+	font-size: 10pt;
+	width: 90%;
+	marging-left: auto;
+	margin-right: auto;
+	height: 12px;
+	border-color: red;
+}
+
+.TextBox-Opret{
+	font-size: 10pt;
+	width: 90%;
+	marging-left: auto;
+	margin-right: auto;
+	height: 14px;
+}
+
+.TextBox-OpretError{
+	font-size: 10pt;
+	width: 90%;
+	marging-left: auto;
+	margin-right: auto;
+	height: 14px;
+	border-color: red;
+}
+
+.TextLabel-ErrorMessage {
+	font-size: 10pt;
+	font-weight: bold;
+	color: red;
+}
+
+.TextLabel {
+	font-size: 10pt;
+}
+
+.Header {
+	border-radius: 25px 120px 0px 0px; 
+	background: linear-gradient(to right, #200772 , #4671D5, #95B0ED);
+	height: 120px;
+	padding: 30px;
+	width: 800px;
+}
+
+.Header-Text{
+	font-family: Verdana;
+	font-size: 40px;
+	color: white;
+	text-align: center;
+}
+
+.Menu {
+	line-height: 20px;
+	background: linear-gradient(#eeeeee , #FFFFFF);
+	width: 160px;
+	padding: 10px;
+}
+
+.Content {
+	width: 640px;
+	padding: 10px;
+	float: left;
+}
+
+.Footer {
+	background: linear-gradient(to right, #95B0ED , #4671D5 , #200772);
+	clear: both;
+	padding: 15px;
+	border-radius: 0px 0px 25px 100px;
+	height: 50px;
+	width: 800px;
+}
+
+.Footer-Text {
+	font-family: Courier;
+	color: white;
+	text-align: center;
+}
+
+.Content-Login {
+	width: 1024px;
+	padding: 25px;
+	float: center;
+	min-height: 400px;
+	horizontal-alignment: center;
+}
+
+.Header-Login {
+	border-radius: 25px 120px 0px 0px; 
+	background: linear-gradient(to right, #200772 , #4671D5, #95B0ED);
+	height: 60px;
+	color: white;
+	text-align: center;
+	font-size: 20px;
+	padding: 15px;
+	font-family: Verdana;
+	width: 600px;
+}
+
+.Footer-Login {
+	background: linear-gradient(to right, #95B0ED , #4671D5 , #200772);
+	color: white;
+	clear: both;
+	text-align: center;
+	padding: 10px;
+	font-family: Courier;
+	border-radius: 0px 0px 25px 100px;
+	height: 25px;
+	float: bottom;
+	width: 600px;
+}
+
+.FlexTable-Login {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.TextLabel-Login {
+	font-size: 10pt;
+	color: #555555;
+}
+
+.TextBox-Error {
+	border-color: red;
+	font-size: 16pt;
+	width: 200px;
+}
+
+
+
+.FlexTable-Header{
+	font-weight: bold;
+	color: #555555;
+}
+
+.FlexTable-Menu {
+	width: 100%;
+}
+
+.FlexTable-Userinfo{
+	border-radius: 10px 10px 10px 10px; 
+	background:  linear-gradient(#FFFFFF, #eeeeee);
+	padding: 5px;
+	width: 100%;
+}
+
+.Button-Logud{
+	height: 2em;
+	font-size: 11px;
+	padding: 0px;
+	margin: 0px;
+	width: 40px;	
+}
+
+.Button-Ret{
+	height: 30px;
+	font-size: 12px;
+	padding: 0px;
+	margin: 0px;
+	width: 110px;	
+}
+.TextLabel-Logud{
+	font-size: 11px;
+	color: #555555;
+}
+
+.FlexTable-Content{
+	width: 100%;
+}
+
+
+
+.Button-Komponenter{
+	height: 20px;
+	font-size: 12px;
+	padding: 0px;
+	margin: 0px;
+	width: 80px;
+}
+
+.Recept-Komponenter{
+	height: 20px;
+	font-size: 12px;
+	padding: 0px;
+	margin: 0px;
+	width: 150px;
+	}	
+
+.FlexTable-PB{
+	width: 100%;
+	border-style: dashed;
+	border-width: 1px;
+	padding: 5px;
+}
+	
+.Hide{
+	display: none;
+}
+
+.Button-Blue{
+	background: linear-gradient(to right, #200772 , #4671D5, #95B0ED);
+	width: 100px;
+}
+
+.Button-Red{
+	background: linear-gradient(to right, #FF0000 , #FFD300);
+	width: 100px;
+}
+
+.Button-Green{
+	background: linear-gradient(to right, #2FAF00, #B5E0A5);
+	width: 100px;
+}
+
+.Header-Green {
+	border-radius: 25px 120px 0px 0px; 
+	background: linear-gradient(to right, #2FAF00, #B5E0A5);
+	height: 120px;
+	padding: 30px;
+	width: 1024px;
+}
+
+.Footer-Green {
+	background: linear-gradient(to right, #B5E0A5, #2FAF00);
+	clear: both;
+	padding: 15px;
+	border-radius: 0px 0px 25px 100px;
+	height: 50px;
+	float: bottom;
+	width: 1024px;
+}
+
+.Header-Red {
+	border-radius: 25px 120px 0px 0px; 
+	background: linear-gradient(to right, #FF0000 , #FFD300);
+	height: 120px;
+	padding: 30px;
+	width: 1024px;
+}
+
+.Footer-Red {
+	background: linear-gradient(to right, #FFD300, #FF0000);
+	clear: both;
+	padding: 15px;
+	border-radius: 0px 0px 25px 100px;
+	height: 50px;
+	float: bottom;
+	width: 1024px;
+}
+
+@media print {
+	.Header { 
+	display: none;
+	}
+	.Footer {
+	display: none;
+	}
+	.Menu {
+	display: none;
+	}
+	.Button-Ret {
+	display: none;
+	}
+}
+
+.Time-Error{
+	font-size: 11px;
+	color: #FF0000;
+	font-weight: bold;
+}
+
+.Popup-Login{
+	width: 400px;
+	min-height: 300px;
+	padding: 25px;
+	float: center;
+	horizontal-alignment: center;
 }

@@ -1,6 +1,5 @@
 package costa_kalundborg.client;
 
-import com.google.gwt.dev.asm.Label;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Anchor;
@@ -8,6 +7,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import costa_kalundborg.client.content.BookPlads;
@@ -16,44 +16,67 @@ public class Menu extends Composite{
 	
 	private ServiceAsync service;
 	private HorizontalPanel hPane;
-	private VerticalPanel vPaneMenu, vPaneCon;
+	private VerticalPanel vPaneMenu, vPaneCon, header, footer, site;
 	private FlexTable ftMenu, ftCon;
 	
 	public Menu(final ServiceAsync service){
+		site = new VerticalPanel();
 		hPane = new HorizontalPanel();
 		vPaneMenu = new VerticalPanel();
 		vPaneCon = new VerticalPanel();
+		header = new VerticalPanel();
+		footer = new VerticalPanel();
+		header.setStyleName("Header");
+		footer.setStyleName("Footer");
+		site.add(header);
+		site.add(hPane);
 		hPane.add(vPaneMenu);
 		hPane.add(vPaneCon);
-		initWidget(hPane);
+		site.add(footer);
+		initWidget(site);
+		vPaneCon.add(new BookPlads(service));
 		run();
 	}
 	
 	private void run(){
 		ftMenu = new FlexTable();
+		ftMenu.setStyleName("Menu");
 		ftCon = new FlexTable();
+		ftCon.setStyleName("Content");
+		Label txt = new Label();
+		txt.setStyleName("Header-Text");
+		txt.setText("Costa Kalundborg");
+		header.add(txt);
+		
+		Label txt2 = new Label();
+		txt2.setStyleName("Footer-Text");
+		txt2.setText("Et bookingssystem udviklet af Gruppe 3");
+		footer.add(txt2);
 		
 		Button plads = new Button("Book plads");
+		plads.setStyleName("Button-Ret");
 		plads.addClickHandler(new ClickHandler(){
 
 			@Override
 			public void onClick(ClickEvent event) {
 				vPaneCon.clear();
 				vPaneCon.add(new BookPlads(service));
-			}
-			
+			}	
 		});
-		Button kamel = new Button("Book kamel");
-		Button hund = new Button("Book hund");
-		Button telt = new Button("Book telt");
+		Button editBook = new Button("Rediger booking");
+		editBook.setStyleName("Button-Ret");
+		Button tjekUd = new Button("Tjek ud");
+		tjekUd.setStyleName("Button-Ret");
+		Button sletBooking = new Button("Slet booking");
+		sletBooking.setStyleName("Button-Ret");
 		
 		ftMenu.setWidget(0, 0, plads);
-		ftMenu.setWidget(1, 0, kamel);
-		ftMenu.setWidget(2, 0, hund);
-		ftMenu.setWidget(3, 0, telt);
+		ftMenu.setWidget(1, 0, editBook);
+		ftMenu.setWidget(2, 0, tjekUd);
+		ftMenu.setWidget(3, 0, sletBooking);
 		
 		
-		ftCon.setText(0, 0, "CONTENT");
+//		ftCon.setText(0, 0, "CONTENT");
 		
 		vPaneMenu.add(ftMenu);
 		vPaneCon.add(ftCon);

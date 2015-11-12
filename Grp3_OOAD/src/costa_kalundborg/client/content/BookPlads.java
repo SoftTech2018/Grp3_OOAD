@@ -1,7 +1,6 @@
 package costa_kalundborg.client.content;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -18,25 +17,25 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import costa_kalundborg.client.Service;
 import costa_kalundborg.client.ServiceAsync;
 import costa_kalundborg.shared.BookingDTO;
+import costa_kalundborg.shared.HyttePladsDTO;
 import costa_kalundborg.shared.KundeDTO;
 import costa_kalundborg.shared.LillePladsDTO;
 import costa_kalundborg.shared.PladsDTO;
-import costa_kalundborg.shared.Status;
+import costa_kalundborg.shared.StorPladsDTO;
+import costa_kalundborg.shared.TeltPladsDTO;
 
 public class BookPlads extends Composite {
 
 	private ServiceAsync service;
 	private VerticalPanel vPane;
-	private FlexTable ft;
-	private TextBox firstName, cpr, street, housenr, zip, town, email, phone, credit, date1, date2, adult, child, xPers, dog;
-	private Button ok, vælg, book;
+	private FlexTable ft, ft2;
+	private TextBox firstName, cpr, street, zip, town, email, phone, date1, date2, adult, child, xPers, dog;
+	private Button ok, book;
 	private ListBox type;
 	private int adults, children, pladsId, dogg, xPerss;
 	private String startDate, endDate, kundenavn, kundeCpr, adresse, postnummer, by;
 
 	public BookPlads(final ServiceAsync service){
-
-		
 		this.service = service;
 		vPane = new VerticalPanel();
 		initWidget(vPane);
@@ -44,25 +43,20 @@ public class BookPlads extends Composite {
 	}
 
 	private void run(){
-		
 		vPane.clear();
-
 		ft = new FlexTable();
 
 		ft.setText(0, 0, "Start dato");
 		date1 = new TextBox();
 		ft.setWidget(0, 1, date1);
 
-
 		ft.setText(1, 0, "Slut dato");
 		date2 = new TextBox();
 		ft.setWidget(1, 1, date2);
 
-
 		ft.setText(2, 0, "Antal voksne");
 		adult = new TextBox();
 		ft.setWidget(2, 1, adult);
-
 
 		ft.setText(3, 0, "Antal børn");
 		child = new TextBox();
@@ -76,12 +70,12 @@ public class BookPlads extends Composite {
 		dog = new TextBox();
 		ft.setWidget(5, 1, dog);
 
-
 		ok = new Button("Søg");
+		ok.setStyleName("Button-Ret");
 		ft.setWidget(6, 0, ok);
 
 		if(service==null){
-//			Window.alert("NullPointerException for Service");
+			//			Window.alert("NullPointerException for Service");
 			this.service = GWT.create(Service.class);
 		}
 		vPane.add(ft);
@@ -89,7 +83,7 @@ public class BookPlads extends Composite {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				
+
 				startDate = date1.getText();
 				endDate = date2.getText();
 				try {
@@ -100,23 +94,7 @@ public class BookPlads extends Composite {
 				}catch (NumberFormatException e){
 					// TO DO
 				}
-
 				try {
-//					service.getBooking(1, new AsyncCallback<BookingDTO>(){
-//
-//						@Override
-//						public void onFailure(Throwable caught) {
-//							Window.alert("Ingen ledige pladser");
-//							
-//						}
-//
-//						@Override
-//						public void onSuccess(BookingDTO result) {
-//							Window.alert("Ledige pladser");
-//							
-//						}
-//						
-//					});
 					service.checkBooking(new BookingDTO(startDate, endDate, "cancel", 0.0, 0, 0, 0, 0, 0), new AsyncCallback<ArrayList<PladsDTO>>(){
 
 						@Override
@@ -127,142 +105,104 @@ public class BookPlads extends Composite {
 
 						@Override
 						public void onSuccess(ArrayList<PladsDTO> result) {
-							Window.alert("Der er ledige pladser! " +result.size());
+							ft2 = new FlexTable();
+							vPane.clear();
+							vPane.add(ft2);
 							type = new ListBox();
 							for (PladsDTO i : result){
-								type.addItem(Integer.toString(i.getPlads_id()));
+								type.addItem(getDescription(i));
 							}
-							ft.setWidget(7, 1, type);
-							vælg = new Button();
-							vælg.setText("Vælg");
-							ft.setWidget(8, 0, vælg);
+							ft2.setWidget(1, 1, type);
 
-							vælg.addClickHandler(new ClickHandler(){
+							firstName = new TextBox();
+							ft2.setText(3, 0, "Navn");
+							ft2.setWidget(3, 1, firstName);
+
+							cpr = new TextBox();
+							ft2.setText(4, 0, "cpr");
+							ft2.setWidget(4, 1, cpr);
+
+							street = new TextBox();
+							ft2.setText(5, 0, "Gade/vej & Hus nr.");
+							ft2.setWidget(5, 1, street);
+
+							zip = new TextBox();
+							ft2.setText(6, 0, "Postnummer");
+							ft2.setWidget(6, 1, zip);
+
+							town = new TextBox();
+							ft2.setText(7, 0, "By");
+							ft2.setWidget(7, 1, town);
+
+							email = new TextBox();
+							ft2.setText(8, 0, "Email");
+							ft2.setWidget(8, 1, email);
+
+							phone = new TextBox();
+							ft2.setText(9, 0, "Telefon nr.");
+							ft2.setWidget(9, 1, phone);
+
+							book = new Button();
+							book.setText("Book");
+							book.setStyleName("Button-Ret");
+							ft2.setWidget(10, 0, book);
+							book.addClickHandler(new ClickHandler(){
 
 								@Override
 								public void onClick(ClickEvent event) {
-									// TODO Auto-generated method stub
-									firstName = new TextBox();
-									ft.setText(9, 0, "Navn");
-									ft.setWidget(9, 1, firstName);
+									kundenavn = firstName.getText();
+									kundeCpr = cpr.getText();
+									adresse = street.getText();
+									postnummer = zip.getText();
+									by = town.getText();
+									String[] pladsNr = type.getItemText(type.getSelectedIndex()).split(" ");
+									pladsId = Integer.valueOf(pladsNr[0]);
+									PladsDTO pls = new LillePladsDTO();
+									pls.setPlads_id(pladsId);
+									try {
+										service.createBooking(new BookingDTO(startDate, endDate, "cancel", 0.0, dogg, xPerss, 0, adults, children), new KundeDTO(kundenavn, kundeCpr, adresse, postnummer, by), pls, new AsyncCallback<BookingDTO>(){
 
-									cpr = new TextBox();
-									ft.setText(10, 0, "cpr");
-									ft.setWidget(10, 1, cpr);
-
-									street = new TextBox();
-									ft.setText(11, 0, "Gade/vej");
-									ft.setWidget(11, 1, street);
-
-									housenr = new TextBox();
-									ft.setText(12, 0, "Hus nr.");
-									ft.setWidget(12, 1, housenr);
-
-									zip = new TextBox();
-									ft.setText(13, 0, "Postnummer");
-									ft.setWidget(13, 1, zip);
-
-									town = new TextBox();
-									ft.setText(14, 0, "By");
-									ft.setWidget(14, 1, town);
-
-									email = new TextBox();
-									ft.setText(15, 0, "Email");
-									ft.setWidget(15, 1, email);
-
-									phone = new TextBox();
-									ft.setText(16, 0, "Telefon nr.");
-									ft.setWidget(16, 1, phone);
-
-									credit = new TextBox();
-									ft.setText(17, 0, "Kreditkort");
-									ft.setWidget(17, 1, credit);
-
-									book = new Button();
-									book.setText("Book");
-									ft.setWidget(18, 0, book);
-									book.addClickHandler(new ClickHandler(){
-
-
-										@Override
-										public void onClick(ClickEvent event) {
-											// TODO Auto-generated method stub
-											kundenavn = firstName.getText();
-											kundeCpr = cpr.getText();
-											adresse = street.getText()+" " +housenr.getText();
-											postnummer = zip.getText();
-											by = town.getText();
-											pladsId = type.getSelectedIndex()+1;
-											PladsDTO pls = new LillePladsDTO();
-											pls.setPlads_id(pladsId);
-											try {
-												service.createBooking(new BookingDTO(startDate, endDate, "cancel", 0.0, dogg, xPerss, 0, adults, children), new KundeDTO(kundenavn, kundeCpr, adresse, postnummer, by), pls, new AsyncCallback<BookingDTO>(){
-
-													@Override
-													public void onFailure(
-															Throwable caught) {
-														Window.alert("Fejl i oprettelse");
-													}
-
-													@Override
-													public void onSuccess(
-															BookingDTO result) {
-														Window.alert("Booking oprettet");
-													}
-
-
-
-												});
-											} catch (Exception e) {
-												// TODO Auto-generated catch block
-												e.printStackTrace();
+											@Override
+											public void onFailure(Throwable caught) {
+												Window.alert(caught.getMessage() + pladsId);
 											}
-										}
 
-									});
+											@Override
+											public void onSuccess(BookingDTO result) {
+												Window.alert("Booking oprettet på plads: " + pladsId);
+												run();
+											}
+
+										});
+									} catch (Exception e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
 								}
-
 							});
-
-
 						}
-
 					});
 				} catch (Exception e) {
-					Window.alert(e.getMessage());
+					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
-
 		});
-		
+
 	}
 
-	private String getDescription(int n){
-
-		switch(n) {
-		case 1:
-			return new String("1, 'Lille camping', 400.00, 350.00");
-		case 2:
-			return new String("2, 'Lille camping', 400.00, 350.00");
-		case 3:
-			return new String("3, 'Lille camping', 400.00, 350.00");
-		case 4:
-			return new String("4, 'Stor camping', 740.00, 350.00");
-		case 5:
-			return new String("5, 'Stor camping', 740.00, 350.00");
-		case 6:
-			return new String("6, 'Stor hytte', 980.00, 350.00");
-		case 7:
-			return new String("7, 'Stor hytte', 980.00, 350.00");
-		case 8:
-			return new String("8, 'Lille hytte', 680.00, 350.00");
-		case 9:
-			return new String("9, 'Lille hytte', 680.00, 350.00");		
+	private String getDescription(PladsDTO p){
+		String desc = "";
+		desc = Integer.toString(p.getPlads_id());
+		if (p instanceof StorPladsDTO){
+			desc += " : Stor campingvognsplads, pris: " + p.getPrice();
+		}else if(p instanceof LillePladsDTO){
+			desc += " : Lille campingvognsplads, pris: " + p.getPrice();
+		} else if(p instanceof TeltPladsDTO){
+			desc += " : Teltplads";
+		} else if (p instanceof HyttePladsDTO){
+			desc += " : Hytte, pris: " + p.getPrice();
 		}
-
-		return null;
+		return desc;
 	}
-
 }
-
