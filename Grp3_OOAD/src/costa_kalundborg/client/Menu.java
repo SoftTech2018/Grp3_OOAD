@@ -14,12 +14,13 @@ import costa_kalundborg.client.content.BookPlads;
 
 public class Menu extends Composite{
 	
-	private ServiceAsync service;
+	public static ServiceAsync service;
 	private HorizontalPanel hPane;
 	private VerticalPanel vPaneMenu, vPaneCon, header, footer, site;
 	private FlexTable ftMenu, ftCon;
 	
 	public Menu(final ServiceAsync service){
+		Menu.service = service;
 		site = new VerticalPanel();
 		hPane = new HorizontalPanel();
 		vPaneMenu = new VerticalPanel();
@@ -34,7 +35,7 @@ public class Menu extends Composite{
 		hPane.add(vPaneCon);
 		site.add(footer);
 		initWidget(site);
-		vPaneCon.add(new BookPlads(service));
+		vPaneCon.add(new BookPlads());
 		run();
 	}
 	
@@ -60,7 +61,7 @@ public class Menu extends Composite{
 			@Override
 			public void onClick(ClickEvent event) {
 				vPaneCon.clear();
-				vPaneCon.add(new BookPlads(service));
+				vPaneCon.add(new BookPlads());
 			}	
 		});
 		Button editBook = new Button("Rediger booking");

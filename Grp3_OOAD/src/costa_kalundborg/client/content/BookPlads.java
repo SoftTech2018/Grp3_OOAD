@@ -14,6 +14,7 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import costa_kalundborg.client.Menu;
 import costa_kalundborg.client.Service;
 import costa_kalundborg.client.ServiceAsync;
 import costa_kalundborg.shared.BookingDTO;
@@ -26,17 +27,15 @@ import costa_kalundborg.shared.TeltPladsDTO;
 
 public class BookPlads extends Composite {
 
-	private ServiceAsync service;
 	private VerticalPanel vPane;
 	private FlexTable ft, ft2;
 	private TextBox firstName, cpr, street, zip, town, email, phone, date1, date2, adult, child, xPers, dog;
 	private Button ok, book;
 	private ListBox type;
-	private int adults, children, pladsId, dogg, xPerss;
-	private String startDate, endDate, kundenavn, kundeCpr, adresse, postnummer, by;
+	private int pladsId;
+	private final BookingDTO booking = new BookingDTO();
 
-	public BookPlads(final ServiceAsync service){
-		this.service = service;
+	public BookPlads(){
 		vPane = new VerticalPanel();
 		initWidget(vPane);
 		run();
@@ -74,28 +73,24 @@ public class BookPlads extends Composite {
 		ok.setStyleName("Button-Ret");
 		ft.setWidget(6, 0, ok);
 
-		if(service==null){
-			//			Window.alert("NullPointerException for Service");
-			this.service = GWT.create(Service.class);
-		}
 		vPane.add(ft);
 		ok.addClickHandler(new ClickHandler(){
 
 			@Override
 			public void onClick(ClickEvent event) {
-
-				startDate = date1.getText();
-				endDate = date2.getText();
-				try {
-					adults = Integer.parseInt(adult.getText());
-					children = Integer.parseInt(child.getText());
-					xPerss = Integer.parseInt(xPers.getText());
-					dogg = Integer.parseInt(dog.getText());
+				booking.setStartDate(date1.getText());
+				booking.setEndDate(date2.getText());
+				booking.setStatus("CANCEL");
+				try { booking.setVoksne(Integer.parseInt(adult.getText()));
 				}catch (NumberFormatException e){
-					// TO DO
-				}
+				} try {	booking.setBorn(Integer.parseInt(child.getText()));
+				}catch (NumberFormatException e){
+				} try {	booking.setXtraPerson(Integer.parseInt(xPers.getText()));
+				}catch (NumberFormatException e){
+				} try{ booking.setDog(Integer.parseInt(dog.getText()));
+				}catch (NumberFormatException e){}
 				try {
-					service.checkBooking(new BookingDTO(startDate, endDate, "cancel", 0.0, 0, 0, 0, 0, 0), new AsyncCallback<ArrayList<PladsDTO>>(){
+					Menu.service.checkBooking(booking, new AsyncCallback<ArrayList<PladsDTO>>(){
 
 						@Override
 						public void onFailure(Throwable caught) {
@@ -112,6 +107,7 @@ public class BookPlads extends Composite {
 							for (PladsDTO i : result){
 								type.addItem(getDescription(i));
 							}
+							ft2.setText(1, 0, "Vælg plads:");
 							ft2.setWidget(1, 1, type);
 
 							firstName = new TextBox();
@@ -150,17 +146,14 @@ public class BookPlads extends Composite {
 
 								@Override
 								public void onClick(ClickEvent event) {
-									kundenavn = firstName.getText();
-									kundeCpr = cpr.getText();
-									adresse = street.getText();
-									postnummer = zip.getText();
-									by = town.getText();
+									KundeDTO kunde = new KundeDTO(firstName.getText(), cpr.getText(), street.getText(), zip.getText(), town.getText());
+									
 									String[] pladsNr = type.getItemText(type.getSelectedIndex()).split(" ");
 									pladsId = Integer.valueOf(pladsNr[0]);
-									PladsDTO pls = new LillePladsDTO();
-									pls.setPlads_id(pladsId);
+									PladsDTO plads = new LillePladsDTO();
+									plads.setPlads_id(pladsId);
 									try {
-										service.createBooking(new BookingDTO(startDate, endDate, "cancel", 0.0, dogg, xPerss, 0, adults, children), new KundeDTO(kundenavn, kundeCpr, adresse, postnummer, by), pls, new AsyncCallback<BookingDTO>(){
+										Menu.service.createBooking(booking, kunde, plads, new AsyncCallback<BookingDTO>(){
 
 											@Override
 											public void onFailure(Throwable caught) {

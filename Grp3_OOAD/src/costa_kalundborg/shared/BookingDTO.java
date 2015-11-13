@@ -63,6 +63,25 @@ public class BookingDTO implements Serializable{
 		this.status = status;
 	}
 
+	public void setStatus(String status) {
+		switch(status.toUpperCase()){
+		case "BOOKET":
+			this.status = Status.BOOKET;
+			break;
+		case "CANCEL":
+			this.status = Status.CANCEL;
+			break;
+		case "AFHOLDT":
+			this.status = Status.AFHOLDT;
+			break;
+		case "AKTIV":
+			this.status = Status.AKTIV;
+			break;
+		default: 
+			this.status = Status.CANCEL;
+		}
+	}
+
 	public double getElectric() {
 		return electric;
 	}
