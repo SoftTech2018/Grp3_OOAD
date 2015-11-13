@@ -24,17 +24,21 @@ public class DAO {
 
 	protected KundeDTO getCustomer(String cpr) throws DALException {
 		try { 
-			ResultSet rs = con.doQuery("SELECT * FROM kunde WHERE cpr = " + cpr /*SQL statement med cpr'en den får medsendt*/);
-			if (!rs.first()) throw new DALException("Kunde " + cpr + " findes ikke");
+			ResultSet rs = con.doQuery("SELECT * FROM kunde WHERE cpr = '" + cpr + "'");
+			if (!rs.first()) 
+				throw new DALException("Kunde " + cpr + " findes ikke");
 			//kunde_navn, cpr, adresse, pCode, city, id
-			return new KundeDTO (rs.getString("kunde_navn"), rs.getString("cpr"), rs.getString("adresse"), rs.getString("pCode"), rs.getString("city"));				
+			KundeDTO k = new KundeDTO(rs.getString("kunde_navn"), rs.getString("cpr"), rs.getString("adresse"), rs.getString("pCode"), rs.getString("city"));
+			k.setId(rs.getInt("kunde_id"));
+			return k;
 		}
 		catch (SQLException e) {throw new DALException(e); }
 	}
 
 	protected void createCustomer(KundeDTO c) throws DALException {
 		try {
-			con.doUpdate("INSERT INTO booking VALUES (" + c.getKundeNavn() + "," + c.getCpr() + "," + c.getAdresse() + "," + c.getpCode() + "," + c.getCity() + ")");			
+			con.doUpdate("INSERT INTO kunde(kunde_navn, cpr, adresse, pCode, city) VALUES ('" + c.getKundeNavn()
+						+ "','" + c.getCpr() + "','" + c.getAdresse() + "'," + c.getpCode() + ",'" + c.getCity() + "')");			
 		}catch (SQLException e) {throw new DALException(e); }
 	}
 
@@ -54,12 +58,23 @@ public class DAO {
 	}	
 
 	protected BookingDTO createBooking(BookingDTO b, KundeDTO k, PladsDTO p) throws DALException {
-		try {
-			con.doUpdate("INSERT INTO booking VALUES (" + b.getStartDate() + "," + b.getEndDate() + "," + b.getStatus() + "," + b.getElectric() + "," + b.getDog() + "," + b.getXtraPerson() + "," + b.getCamel() + "," + getCustomer(k.getCpr()).getId() + "," + p.getPlads_id() + ")");
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		try{
+			getCustomer(k.getCpr()); // Tjek om kunden findes
+		} catch (DALException e) {
+			createCustomer(k); // Hvis kunden ikke findes, oprettes denne
 		} 
+		try {
+			String stm = "INSERT INTO booking(start_date, end_date, status, electric, dog, xtraPerson, camel, kunde_id, plads_id, voksne, born) VALUES('" 
+					+ b.getStartDate() + "','" + b.getEndDate() + "','" + b.getStatus() + "'," + b.getElectric() + "," + b.getDog() + ","
+					+ b.getXtraPerson() + "," + b.getCamel() + "," + getCustomer(k.getCpr()).getId() + "," + p.getPlads_id() + "," + b.getVoksne()
+					+ "," + b.getBorn() + ")";
+			System.out.println(stm);
+			con.doUpdate(stm);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DALException("Kunne ikke oprette booking på plads " +p.getPlads_id());
+		} 
+//		return getBooking(con.doQuery("SELECT LAST_INSERT_ID() FROM booking").getInt("booking_id"));
 		return null;
 	}
 
@@ -142,7 +157,7 @@ public class DAO {
 	protected ArrayList<BookingDTO> getBookings(PladsDTO plads) throws DALException {
 		ArrayList<BookingDTO> list = new ArrayList<BookingDTO>();
 		try	{
-			ResultSet rs = con.doQuery("SELECT * from booking WHERE plads = " + plads.getPlads_id());
+			ResultSet rs = con.doQuery("SELECT * from booking WHERE plads_id = " + plads.getPlads_id());
 			while (rs.next())
 			{
 				list.add(new BookingDTO (rs.getString("start_date"), rs.getString("end_date"), rs.getString("status"), rs.getDouble("electric"), rs.getInt("dog"), rs.getInt("xtraPerson"), rs.getInt("camel"), rs.getInt("voksne"), rs.getInt("born")));
