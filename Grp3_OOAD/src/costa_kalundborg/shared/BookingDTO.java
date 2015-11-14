@@ -8,7 +8,7 @@ public class BookingDTO implements Serializable{
 	private String startDate, endDate;
 	private Status status;
 	private double electric;
-	private int dog, voksne, born, xtraPerson, camel;
+	private int dog, voksne, born, xtraPerson, camel, booking_id;
 
 	public BookingDTO(){}
 
@@ -128,6 +128,15 @@ public class BookingDTO implements Serializable{
 
 	public void setBorn(int born) {
 		this.born = born;
+	}
+
+	public int getBooking_id() {
+		// TODO Auto-generated method stub
+		return booking_id;
+	}
+	
+	public void setBooking_id(int id){
+		this.booking_id = id;
 	}
 
 }

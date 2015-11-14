@@ -10,6 +10,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -43,6 +44,11 @@ public class BookPlads extends Composite {
 
 	private void run(){
 		vPane.clear();
+		Label header = new Label();
+		header.setText("Opret booking");
+		header.setStyleName("FlexTable-Header");
+		vPane.add(header);
+		
 		ft = new FlexTable();
 
 		ft.setText(0, 0, "Start dato");
@@ -80,7 +86,7 @@ public class BookPlads extends Composite {
 			public void onClick(ClickEvent event) {
 				booking.setStartDate(date1.getText());
 				booking.setEndDate(date2.getText());
-				booking.setStatus("CANCEL");
+				booking.setStatus("BOOKET");
 				try { booking.setVoksne(Integer.parseInt(adult.getText()));
 				}catch (NumberFormatException e){
 				} try {	booking.setBorn(Integer.parseInt(child.getText()));
@@ -147,7 +153,7 @@ public class BookPlads extends Composite {
 								@Override
 								public void onClick(ClickEvent event) {
 									KundeDTO kunde = new KundeDTO(firstName.getText(), cpr.getText(), street.getText(), zip.getText(), town.getText());
-									
+
 									String[] pladsNr = type.getItemText(type.getSelectedIndex()).split(" ");
 									pladsId = Integer.valueOf(pladsNr[0]);
 									PladsDTO plads = new LillePladsDTO();
@@ -157,15 +163,43 @@ public class BookPlads extends Composite {
 
 											@Override
 											public void onFailure(Throwable caught) {
-												Window.alert(caught.getMessage() + pladsId);
+												Window.alert(caught.getMessage() + " - plads_id: " + pladsId);
 											}
 
 											@Override
 											public void onSuccess(BookingDTO result) {
-												Window.alert("Booking oprettet på plads: " + pladsId);
-												run();
-											}
+												vPane.clear();
+												FlexTable ft3 = new FlexTable();
+												ft3.setText(0, 0, "Booking oprettet");
+												ft3.getRowFormatter().addStyleName(0, "FlexTable-Header");
 
+												ft3.setText(1, 0, "Booking id:");
+												ft3.setText(1, 1, Integer.toString(result.getBooking_id()));
+
+												ft3.setText(2, 0, "Plads id:");
+												ft3.setText(2, 1, Integer.toString(pladsId));
+
+												ft3.setText(3, 0, "Ankomst dato:");
+												ft3.setText(3, 1, result.getStartDate());
+
+												ft3.setText(4, 0, "Slut dato:");
+												ft3.setText(4, 1, result.getEndDate());
+
+												ft3.setText(5, 0, "Status:");
+												ft3.setText(5, 1, result.getStatus().toString());
+												
+												Button forfra = new Button("Ny booking");
+												forfra.setStyleName("Button-Ret");
+												forfra.addClickHandler(new ClickHandler(){
+													@Override
+													public void onClick(ClickEvent event) {
+														run();
+													}
+												});
+												
+												ft3.setWidget(6, 1, forfra);
+												vPane.add(ft3);
+											}
 										});
 									} catch (Exception e) {
 										// TODO Auto-generated catch block

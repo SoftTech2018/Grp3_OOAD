@@ -43,39 +43,40 @@ public class DAO {
 	}
 
 	protected BookingDTO getBooking(int id) throws DALException {
-		BookingDTO b;
 		try { 
 			ResultSet rs = con.doQuery("SELECT * FROM booking WHERE booking_id = " + id /*SQL statement med id'en den får medsendt*/);
 			if (!rs.first()) 
 				throw new DALException("Booking med id:  " + id + " findes ikke");
-			b = new BookingDTO (rs.getString("start_date"), rs.getString("end_date"), rs.getString("status"), rs.getDouble("electric"), rs.getInt("dog"), rs.getInt("xtraPerson"), rs.getInt("camel"), rs.getInt("voksne"), rs.getInt("born"));				
+			return new BookingDTO (rs.getString("start_date"), rs.getString("end_date"), rs.getString("status"), rs.getDouble("electric"), rs.getInt("dog"), rs.getInt("xtraPerson"), rs.getInt("camel"), rs.getInt("voksne"), rs.getInt("born"));				
 		}catch (SQLException e) {
 			throw new DALException(e); 
 		} catch (Exception e) {
 			throw new DALException(e);
 		}
-		return b; 
 	}	
 
 	protected BookingDTO createBooking(BookingDTO b, KundeDTO k, PladsDTO p) throws DALException {
-		try{
-			getCustomer(k.getCpr()); // Tjek om kunden findes
-		} catch (DALException e) {
-			createCustomer(k); // Hvis kunden ikke findes, oprettes denne
-		} 
 		try {
 			String stm = "INSERT INTO booking(start_date, end_date, status, electric, dog, xtraPerson, camel, kunde_id, plads_id, voksne, born) VALUES('" 
 					+ b.getStartDate() + "','" + b.getEndDate() + "','" + b.getStatus() + "'," + b.getElectric() + "," + b.getDog() + ","
 					+ b.getXtraPerson() + "," + b.getCamel() + "," + getCustomer(k.getCpr()).getId() + "," + p.getPlads_id() + "," + b.getVoksne()
 					+ "," + b.getBorn() + ")";
-			System.out.println(stm);
 			con.doUpdate(stm);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DALException("Kunne ikke oprette booking på plads " +p.getPlads_id());
 		} 
-//		return getBooking(con.doQuery("SELECT LAST_INSERT_ID() FROM booking").getInt("booking_id"));
-		return null;
+			try {
+				ResultSet rs = con.doQuery("SELECT * FROM booking WHERE booking_id = LAST_INSERT_ID()");
+				if (!rs.first())
+					throw new DALException("Kunne ikke hente den oprettede booking.");
+				BookingDTO retur = new BookingDTO(rs.getString("start_date"), rs.getString("end_date"), rs.getString("status"), rs.getDouble("electric"), rs.getInt("dog"), rs.getInt("xtraPerson"), rs.getInt("camel"), rs.getInt("voksne"), rs.getInt("born"));
+				retur.setBooking_id(rs.getInt("booking_id"));
+				return retur; 
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw new DALException("Kunne ikke hente den oprettede booking.");
+			}
 	}
 
 	protected PladsDTO getPlads(int plads) throws DALException {

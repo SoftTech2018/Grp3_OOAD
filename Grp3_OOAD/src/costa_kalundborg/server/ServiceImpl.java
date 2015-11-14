@@ -70,7 +70,6 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		ArrayList<PladsDTO> listAll = dao.getPladser();
 		ArrayList<PladsDTO> list = new ArrayList<PladsDTO>();
 		boolean available;
-//		System.out.println(listAll.size() + " pladser hentet."); // test
 		for(PladsDTO plads : listAll){
 			available = true;
 			for(BookingDTO book : dao.getBookings(plads)){
@@ -202,7 +201,12 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 
 	@Override
 	public BookingDTO createBooking(BookingDTO booking, KundeDTO kunde, PladsDTO plads) throws DALException {
-		return dao.createBooking(booking, kunde, plads);
+		try{
+			dao.getCustomer(kunde.getCpr()); // Tjek om kunden findes
+		} catch (DALException e) {
+			dao.createCustomer(kunde); // Hvis kunden ikke findes, oprettes denne
+		} 
+		return dao.createBooking(booking, dao.getCustomer(kunde.getCpr()), plads);
 	}
 
 	@Override
