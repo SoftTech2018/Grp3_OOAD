@@ -28,7 +28,7 @@ public class DAO {
 			if (!rs.first()) 
 				throw new DALException("Kunde " + cpr + " findes ikke");
 			//kunde_navn, cpr, adresse, pCode, city, id
-			KundeDTO k = new KundeDTO(rs.getString("kunde_navn"), rs.getString("cpr"), rs.getString("adresse"), rs.getString("pCode"), rs.getString("city"));
+			KundeDTO k = new KundeDTO(rs.getString("kunde_navn"), rs.getString("cpr"), rs.getString("adresse"), rs.getString("pCode"), rs.getString("city"), rs.getInt("phone"), rs.getString("email"));
 			k.setId(rs.getInt("kunde_id"));
 			return k;
 		}
@@ -37,8 +37,9 @@ public class DAO {
 
 	protected void createCustomer(KundeDTO c) throws DALException {
 		try {
-			con.doUpdate("INSERT INTO kunde(kunde_navn, cpr, adresse, pCode, city) VALUES ('" + c.getKundeNavn()
-						+ "','" + c.getCpr() + "','" + c.getAdresse() + "'," + c.getpCode() + ",'" + c.getCity() + "')");			
+			con.doUpdate("INSERT INTO kunde(kunde_navn, cpr, adresse, pCode, city, phone, email) VALUES ('" + c.getKundeNavn()
+						+ "','" + c.getCpr() + "','" + c.getAdresse() + "'," + c.getpCode() + ",'" + c.getCity()
+						+ "'," + c.getTlf() + ", '" + c.getEmail() + "')");			
 		}catch (SQLException e) {throw new DALException(e); }
 	}
 

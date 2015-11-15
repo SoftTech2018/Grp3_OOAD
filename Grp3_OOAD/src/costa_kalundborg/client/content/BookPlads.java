@@ -116,13 +116,47 @@ public class BookPlads extends Composite {
 							ft2.setText(1, 0, "Vælg plads:");
 							ft2.setWidget(1, 1, type);
 
-							firstName = new TextBox();
-							ft2.setText(3, 0, "Navn");
-							ft2.setWidget(3, 1, firstName);
-
 							cpr = new TextBox();
-							ft2.setText(4, 0, "cpr");
-							ft2.setWidget(4, 1, cpr);
+							ft2.setText(3, 0, "cpr");
+							ft2.setWidget(3, 1, cpr);
+							
+							Button soeg = new Button("Søg");
+							soeg.setStyleName("Button-Ret");
+							ft2.setWidget(3, 2, soeg);
+							soeg.addClickHandler(new ClickHandler(){
+								@Override
+								public void onClick(ClickEvent event) {
+									Menu.service.getKunde(cpr.getText(), new AsyncCallback<KundeDTO>(){
+
+										@Override
+										public void onFailure(Throwable caught) {
+											Window.alert(caught.getMessage());											
+										}
+
+										@Override
+										public void onSuccess(KundeDTO result) {
+											ft2.clearCell(3, 2);
+											cpr.setReadOnly(true);
+											firstName.setText(result.getKundeNavn());
+											firstName.setReadOnly(true);
+											street.setText(result.getAdresse());
+											street.setReadOnly(true);
+											zip.setText(result.getpCode());
+											zip.setReadOnly(true);
+											town.setText(result.getCity());
+											town.setReadOnly(true);
+											phone.setText(Integer.toString(result.getTlf()));
+											phone.setReadOnly(true);
+											email.setText(result.getEmail());
+											email.setReadOnly(true);
+										}
+									});
+								}
+							});
+							
+							firstName = new TextBox();
+							ft2.setText(4, 0, "Navn");
+							ft2.setWidget(4, 1, firstName);
 
 							street = new TextBox();
 							ft2.setText(5, 0, "Gade/vej & Hus nr.");
@@ -152,7 +186,13 @@ public class BookPlads extends Composite {
 
 								@Override
 								public void onClick(ClickEvent event) {
-									KundeDTO kunde = new KundeDTO(firstName.getText(), cpr.getText(), street.getText(), zip.getText(), town.getText());
+									int tlf;
+									try {
+										tlf = Integer.valueOf(phone.getText());
+									} catch (NumberFormatException e){
+										tlf = 00000000;
+									}
+									KundeDTO kunde = new KundeDTO(firstName.getText(), cpr.getText(), street.getText(), zip.getText(), town.getText(), tlf, email.getText());
 
 									String[] pladsNr = type.getItemText(type.getSelectedIndex()).split(" ");
 									pladsId = Integer.valueOf(pladsNr[0]);
