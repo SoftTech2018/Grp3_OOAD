@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -19,6 +21,7 @@ import costa_kalundborg.client.Menu;
 import costa_kalundborg.client.Service;
 import costa_kalundborg.client.ServiceAsync;
 import costa_kalundborg.shared.BookingDTO;
+import costa_kalundborg.shared.FieldVerifier;
 import costa_kalundborg.shared.HyttePladsDTO;
 import costa_kalundborg.shared.KundeDTO;
 import costa_kalundborg.shared.LillePladsDTO;
@@ -116,11 +119,25 @@ public class BookPlads extends Composite {
 							ft2.setText(1, 0, "Vælg plads:");
 							ft2.setWidget(1, 1, type);
 
+							final Button soeg = new Button("Søg");
 							cpr = new TextBox();
+							cpr.addKeyUpHandler(new KeyUpHandler(){
+								@Override
+								public void onKeyUp(KeyUpEvent event) {
+									if (!FieldVerifier.isValidCpr(cpr.getText())){
+										soeg.setEnabled(false);
+										book.setEnabled(false);
+										cpr.setStyleName("TextBox-Error");
+									} else {
+										soeg.setEnabled(true);
+										book.setEnabled(true);
+										cpr.setStyleName("TextBox");
+									}
+								}
+							});
 							ft2.setText(3, 0, "cpr");
 							ft2.setWidget(3, 1, cpr);
 							
-							Button soeg = new Button("Søg");
 							soeg.setStyleName("Button-Ret");
 							ft2.setWidget(3, 2, soeg);
 							soeg.addClickHandler(new ClickHandler(){

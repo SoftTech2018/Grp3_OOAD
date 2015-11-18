@@ -5,8 +5,7 @@ html {
 }
 
 .TextBox {
-	font-size: 16pt;
-	width: 200px;
+	height: 2em;
 }
 
 .TextBox-Startside{
@@ -157,8 +156,7 @@ html {
 
 .TextBox-Error {
 	border-color: red;
-	font-size: 16pt;
-	width: 200px;
+	height: 2em;
 }
 
 

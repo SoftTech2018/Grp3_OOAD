@@ -39,4 +39,25 @@ public class FieldVerifier {
 		}
 		return name.length() > 3;
 	}
+	
+	public static boolean isValidCpr(String cpr){
+		if (cpr.length() != 11){
+			return false;
+		}
+		if (!(cpr.charAt(6)=='-')){
+			return false;
+		}
+		String[] sString = cpr.split("\\-");
+		for (char c : sString[0].toCharArray()){
+			if(String.valueOf(c).matches("\\D")){
+				return false;
+			}
+		}
+		for (char c : sString[1].toCharArray()){
+			if(String.valueOf(c).matches("\\D")){
+				return false;
+			}
+		}
+		return true;
+	}
 }
