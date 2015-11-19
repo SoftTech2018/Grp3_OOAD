@@ -39,7 +39,7 @@ public class FieldVerifier {
 		}
 		return name.length() > 3;
 	}
-	
+
 	public static boolean isValidCpr(String cpr){
 		if (cpr.length() != 11){
 			return false;
@@ -58,6 +58,22 @@ public class FieldVerifier {
 				return false;
 			}
 		}
+		return true;
+	}
+
+	public static boolean checkDate(String date){
+		String[] sString = date.split("\\-");
+		if (sString.length!=3){
+			return false;
+		}
+		for (int i=0; i<sString.length; i++){			
+			for (char c : sString[i].toCharArray()){
+				if(String.valueOf(c).matches("\\D")){
+					return false;
+				}
+			}
+		}
+
 		return true;
 	}
 }

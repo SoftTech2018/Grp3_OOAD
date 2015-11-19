@@ -53,13 +53,41 @@ public class BookPlads extends Composite {
 		vPane.add(header);
 		
 		ft = new FlexTable();
+		
+		ok = new Button("Søg");
+		ok.setStyleName("Button-Ret");
+		ok.setEnabled(false);
 
 		ft.setText(0, 0, "Start dato");
 		date1 = new TextBox();
+		date1.addKeyUpHandler(new KeyUpHandler(){
+			@Override
+			public void onKeyUp(KeyUpEvent event) {
+				if (!FieldVerifier.checkDate(date1.getText())){
+					ok.setEnabled(false);
+					date1.setStyleName("TextBox-Error");
+				} else {
+					ok.setEnabled(true);
+					date1.setStyleName("TextBox");
+				}
+			}
+		});
 		ft.setWidget(0, 1, date1);
 
 		ft.setText(1, 0, "Slut dato");
 		date2 = new TextBox();
+		date2.addKeyUpHandler(new KeyUpHandler(){
+			@Override
+			public void onKeyUp(KeyUpEvent event) {
+				if (!FieldVerifier.checkDate(date1.getText())){
+					ok.setEnabled(false);
+					date2.setStyleName("TextBox-Error");
+				} else {
+					ok.setEnabled(true);
+					date2.setStyleName("TextBox");
+				}
+			}
+		});
 		ft.setWidget(1, 1, date2);
 
 		ft.setText(2, 0, "Antal voksne");
@@ -78,8 +106,6 @@ public class BookPlads extends Composite {
 		dog = new TextBox();
 		ft.setWidget(5, 1, dog);
 
-		ok = new Button("Søg");
-		ok.setStyleName("Button-Ret");
 		ft.setWidget(6, 0, ok);
 
 		vPane.add(ft);
