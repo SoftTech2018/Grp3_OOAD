@@ -70,11 +70,20 @@ public class Menu extends Composite{
 		tjekUd.setStyleName("Button-Ret");
 		Button sletBooking = new Button("Slet booking");
 		sletBooking.setStyleName("Button-Ret");
+		Button ankomst = new Button("Registrer ankomst");
+		ankomst.setStyleName("Button-Ret");
+		Button kamel = new Button("Leje af kamel");
+		kamel.setStyleName("Button-Ret");
+		Button strom = new Button("Registrer strøm");
+		strom.setStyleName("Button-Ret");
 		
 		ftMenu.setWidget(0, 0, plads);
-		ftMenu.setWidget(1, 0, editBook);
-		ftMenu.setWidget(2, 0, tjekUd);
-		ftMenu.setWidget(3, 0, sletBooking);
+		ftMenu.setWidget(1, 0, ankomst);
+		ftMenu.setWidget(2, 0, editBook);
+		ftMenu.setWidget(3, 0, tjekUd);
+		ftMenu.setWidget(4, 0, sletBooking);
+		ftMenu.setWidget(5, 0, kamel);
+		ftMenu.setWidget(6, 0, strom);
 		
 		
 //		ftCon.setText(0, 0, "CONTENT");
